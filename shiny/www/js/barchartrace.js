@@ -25,7 +25,7 @@ let subtitle = svg.append("text")
    
 let caption = svg.append('text')
   .attr('class', 'caption')
-  .attr('x', width)
+  .attr('x', width-margin.right)
   .attr('y', height-5)
   .style('text-anchor', 'end')
   .html(options.caption);
@@ -39,6 +39,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
     d.last_value = +d.last_value,
     d.value = isNaN(d.value) ? 0 : d.value,
     d.frame = +d.frame,
+    //d.colour = d3.hsl(d.colour);
     d.colour = d3.hsl(Math.random()*360,0.75,0.75);
   });
     
