@@ -18,8 +18,8 @@ let title = svg.append('text')
   .attr('y', 24)
   .html(options.title);
   
-let subTitle = svg.append("text")
-  .attr("class", "subTitle")
+let subtitle = svg.append("text")
+  .attr("class", "subtitle")
   .attr("y", 55)
   .html(options.subtitle);
    
@@ -30,26 +30,26 @@ let caption = svg.append('text')
   .style('text-anchor', 'end')
   .html(options.caption);
 
-let year = options.first_year;
-let last_year = options.last_year;
+let frame = options.first_frame;
+let last_frame = options.last_frame;
      
 r2d3.onRender(function(data, svg, width, height, options) {
   data.forEach(d => {
     d.value = +d.value,
-    d.lastValue = +d.lastValue,
+    d.last_value = +d.last_value,
     d.value = isNaN(d.value) ? 0 : d.value,
-    d.year = +d.year,
+    d.frame = +d.frame,
     d.colour = d3.hsl(Math.random()*360,0.75,0.75);
   });
     
-  let yearSlice = data.filter(d => d.year == year && !isNaN(d.value))
+  let frameSlice = data.filter(d => d.frame == frame && !isNaN(d.value))
     .sort((a,b) => b.value - a.value)
     .slice(0, top_n);
   
-  yearSlice.forEach((d,i) => d.rank = i);
+  frameSlice.forEach((d,i) => d.rank = i);
   
   let x = d3.scaleLinear()
-    .domain([0, d3.max(yearSlice, d => d.value)])
+    .domain([0, d3.max(frameSlice, d => d.value)])
     .range([margin.left, width-margin.right-65]);
   
   let y = d3.scaleLinear()
@@ -70,7 +70,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
     .classed('origin', d => d === 0);
   
    svg.selectAll('rect.bar')
-     .data(yearSlice, d => d.name)
+     .data(frameSlice, d => d.name)
      .enter()
      .append('rect')
      .attr('class', 'bar')
@@ -81,7 +81,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
      .style('fill', d => d.colour);
       
    svg.selectAll('text.label')
-     .data(yearSlice, d => d.name)
+     .data(frameSlice, d => d.name)
      .enter()
      .append('text')
      .attr('class', 'label')
@@ -91,30 +91,30 @@ r2d3.onRender(function(data, svg, width, height, options) {
      .html(d => d.name);
       
    svg.selectAll('text.valueLabel')
-     .data(yearSlice, d => d.name)
+     .data(frameSlice, d => d.name)
      .enter()
      .append('text')
      .attr('class', 'valueLabel')
      .attr('x', d => x(d.value)+5)
      .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
-     .text(d => d3.format(',.0f')(d.lastValue));
+     .text(d => d3.format(',.0f')(d.last_value));
 
-   let yearText = svg.append('text')
-     .attr('class', 'yearText')
+   let frameText = svg.append('text')
+     .attr('class', 'frameText')
      .attr('x', width-margin.right)
      .attr('y', height-25)
      .style('text-anchor', 'end')
-     .html(~~year)
+     .html(~~frame)
      .call(halo, 10);
      
    let ticker = d3.interval(e => {
 
-   yearSlice = data.filter(d => d.year == year && !isNaN(d.value))
+   frameSlice = data.filter(d => d.frame == frame && !isNaN(d.value))
      .sort((a,b) => b.value - a.value)
      .slice(0,top_n);
 
-   yearSlice.forEach((d,i) => d.rank = i);
-   x.domain([0, d3.max(yearSlice, d => d.value)]); 
+   frameSlice.forEach((d,i) => d.rank = i);
+   x.domain([0, d3.max(frameSlice, d => d.value)]); 
      
    svg.select('.xAxis')
      .transition()
@@ -122,7 +122,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
        .ease(d3.easeLinear)
        .call(xAxis);
     
-   let bars = svg.selectAll('.bar').data(yearSlice, d => d.name);
+   let bars = svg.selectAll('.bar').data(frameSlice, d => d.name);
     
    bars
      .enter()
@@ -154,7 +154,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
        .attr('y', d => y(top_n+1)+5)
        .remove();
 
-   let labels = svg.selectAll('.label').data(yearSlice, d => d.name);
+   let labels = svg.selectAll('.label').data(frameSlice, d => d.name);
      
    labels
      .enter()
@@ -185,7 +185,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
        .attr('y', d => y(top_n+1)+5)
        .remove();
      
-   let valueLabels = svg.selectAll('.valueLabel').data(yearSlice, d => d.name);
+   let valueLabels = svg.selectAll('.valueLabel').data(frameSlice, d => d.name);
   
    valueLabels
      .enter()
@@ -193,7 +193,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
      .attr('class', 'valueLabel')
      .attr('x', d => x(d.value)+5)
      .attr('y', d => y(top_n+1)+5)
-     .text(d => d3.format(',.0f')(d.lastValue))
+     .text(d => d3.format(',.0f')(d.last_value))
      .transition()
        .duration(tick_duration)
        .ease(d3.easeLinear)
@@ -206,7 +206,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
        .attr('x', d => x(d.value)+5)
        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
        .tween("text", function(d) {
-               let i = d3.interpolateRound(d.lastValue, d.value);
+               let i = d3.interpolateRound(d.last_value, d.value);
                var node = this;
                return function(t) {
                  node.textContent = d3.format(',')(i(t));
@@ -222,11 +222,11 @@ r2d3.onRender(function(data, svg, width, height, options) {
        .attr('y', d => y(top_n+1)+5)
        .remove();
     
-   yearText.html(~~year);
+   frameText.html(~~frame);
      
-   if(year == last_year) ticker.stop();
+   if(frame == last_frame) ticker.stop();
    
-   year = d3.format('.1f')((+year) + 0.1);
+   frame = d3.format('.1f')((+frame) + 0.1);
    }, tick_duration);
  });
     
