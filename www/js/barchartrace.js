@@ -1,4 +1,4 @@
-var tickDuration = options.tickDuration;
+var tick_duration = options.tick_duration;
     
 var top_n = options.top_n;
 var height = options.height;
@@ -11,7 +11,7 @@ const margin = {
   left: options.margin_left
 };
   
-let barPadding = (height-(margin.bottom+margin.top))/(top_n*5);
+let bar_padding = (height-(margin.bottom+margin.top))/(top_n*5);
       
 let title = svg.append('text')
   .attr('class', 'title')
@@ -34,8 +34,6 @@ let year = options.first_year;
 let last_year = options.last_year;
      
 r2d3.onRender(function(data, svg, width, height, options) {
-//d3.csv('https://raw.githubusercontent.com/ytdec/bar-chart-race/master/brand_values.csv').then(function(data) {
-
   data.forEach(d => {
     d.value = +d.value,
     d.lastValue = +d.lastValue,
@@ -79,7 +77,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
      .attr('x', x(0)+1)
      .attr('width', d => x(d.value)-x(0)-1)
      .attr('y', d => y(d.rank)+5)
-     .attr('height', y(1)-y(0)-barPadding)
+     .attr('height', y(1)-y(0)-bar_padding)
      .style('fill', d => d.colour);
       
    svg.selectAll('text.label')
@@ -120,9 +118,9 @@ r2d3.onRender(function(data, svg, width, height, options) {
      
    svg.select('.xAxis')
      .transition()
-     .duration(tickDuration)
-     .ease(d3.easeLinear)
-     .call(xAxis);
+       .duration(tick_duration)
+       .ease(d3.easeLinear)
+       .call(xAxis);
     
    let bars = svg.selectAll('.bar').data(yearSlice, d => d.name);
     
@@ -133,16 +131,16 @@ r2d3.onRender(function(data, svg, width, height, options) {
      .attr('x', x(0)+1)
      .attr( 'width', d => x(d.value)-x(0)-1)
      .attr('y', d => y(top_n+1)+5)
-     .attr('height', y(1)-y(0)-barPadding)
+     .attr('height', y(1)-y(0)-bar_padding)
      .style('fill', d => d.colour)
      .transition()
-       .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('y', d => y(d.rank)+5);
           
    bars
      .transition()
-       .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('width', d => x(d.value)-x(0)-1)
        .attr('y', d => y(d.rank)+5);
@@ -150,14 +148,13 @@ r2d3.onRender(function(data, svg, width, height, options) {
    bars
      .exit()
      .transition()
-       .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('width', d => x(d.value)-x(0)-1)
        .attr('y', d => y(top_n+1)+5)
        .remove();
 
-   let labels = svg.selectAll('.label')
-     .data(yearSlice, d => d.name);
+   let labels = svg.selectAll('.label').data(yearSlice, d => d.name);
      
    labels
      .enter()
@@ -168,13 +165,13 @@ r2d3.onRender(function(data, svg, width, height, options) {
      .style('text-anchor', 'end')
      .html(d => d.name)    
      .transition()
-       .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
     
    labels
      .transition()
-     .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('x', d => x(d.value)-8)
        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
@@ -182,14 +179,14 @@ r2d3.onRender(function(data, svg, width, height, options) {
    labels
      .exit()
      .transition()
-       .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('x', d => x(d.value)-8)
        .attr('y', d => y(top_n+1)+5)
        .remove();
      
    let valueLabels = svg.selectAll('.valueLabel').data(yearSlice, d => d.name);
-    
+  
    valueLabels
      .enter()
      .append('text')
@@ -198,27 +195,28 @@ r2d3.onRender(function(data, svg, width, height, options) {
      .attr('y', d => y(top_n+1)+5)
      .text(d => d3.format(',.0f')(d.lastValue))
      .transition()
-       .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
-            
+       
    valueLabels
      .transition()
-       .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('x', d => x(d.value)+5)
        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
        .tween("text", function(d) {
-       let i = d3.interpolateRound(d.lastValue, d.value);
-       return function(t) {
-         this.textContent = d3.format(',')(i(t));
-       };
-     });
+               let i = d3.interpolateRound(d.lastValue, d.value);
+               var node = this;
+               return function(t) {
+                 node.textContent = d3.format(',')(i(t));
+              };
+            });
      
    valueLabels
      .exit()
      .transition()
-       .duration(tickDuration)
+       .duration(tick_duration)
        .ease(d3.easeLinear)
        .attr('x', d => x(d.value)+5)
        .attr('y', d => y(top_n+1)+5)
@@ -227,8 +225,9 @@ r2d3.onRender(function(data, svg, width, height, options) {
    yearText.html(~~year);
      
    if(year == last_year) ticker.stop();
+   
    year = d3.format('.1f')((+year) + 0.1);
-   },tickDuration);
+   }, tick_duration);
  });
     
 const halo = function(text, strokeWidth) {
