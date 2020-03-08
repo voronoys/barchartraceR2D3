@@ -39,8 +39,8 @@ r2d3.onRender(function(data, svg, width, height, options) {
     d.last_value = +d.last_value,
     d.value = isNaN(d.value) ? 0 : d.value,
     d.frame = +d.frame,
-    //d.colour = d3.hsl(d.colour);
-    d.colour = d3.hsl(Math.random()*360,0.75,0.75);
+    d.colour = d3.hsl(d.colour);
+    //d.colour = d3.hsl(Math.random()*360,0.75,0.75);
   });
     
   let frameSlice = data.filter(d => d.frame == frame && !isNaN(d.value))
