@@ -9,6 +9,7 @@ library(r2d3)
 data_tst <- read.table(file = "../data/brand_values.csv", sep = ",", dec = ".", header = TRUE, quote = "\"")
 data_tst <- data_tst %>%
   mutate(frame_label = str_sub(string = year, start = 1, end = 4),
+         colour = if_else(name == 'Microsoft', '#e00b21', "#32a852")
          #year = as.numeric(factor(x = year, levels = seq(2010, 2018, by = 0.1), labels = seq(2010, 2018, by = 0.1)))) %>%
   ) %>%
   rename(frame = year,

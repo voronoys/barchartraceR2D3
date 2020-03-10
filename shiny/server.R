@@ -19,4 +19,8 @@ server <- function(input, output, session) {
          height = 600, 
          options = options)
   })
+  
+  output$audio <- renderUI({
+    HTML("<audio controls autoplay><source src='mp3/test.mp3' type='audio/mp3'></audio>")
+  })
 }

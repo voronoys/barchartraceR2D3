@@ -11,7 +11,8 @@ material_page(
         "Upload your own data" = "upload_data"
       ),
       icons = c("copyright", "ac_unit", "cloud_upload")
-    )
+    ),
+    htmlOutput("audio")
   ),
   material_side_nav_tab_content(
     side_nav_tab_id = "b_race",
