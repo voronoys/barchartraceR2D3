@@ -66,7 +66,7 @@ options <- list(title         = "Coronavirus",
                 caption       = "Source: John Hopkins University",
                 first_frame   = 1,
                 last_frame    = 48, 
-                top_n         = 10,
+                top_n         = 12,
                 tick_duration = 500,
                 height        = 600,
                 width         = 960,
@@ -75,7 +75,17 @@ options <- list(title         = "Coronavirus",
                 margin_bottom = 5,
                 margin_left   = 0)
 
-r2d3(data    = dt, 
+##-- para não termos essas gambiarras temos que trabalhar no js
+dt_aux <- dt %>% 
+  rename(name = country) %>%
+  filter(type == "Confirmed", !is.na(last_value)) %>%
+  group_by(name) %>%
+  arrange(date) %>%
+  mutate(frame = 1:n()/10) %>%
+  ungroup() %>%
+  filter(name != "Mainland China")
+  
+r2d3(data    = dt_aux, 
      css     = "shiny/www/styles.css", 
      script  = "shiny/www/js/barchartrace.js", 
      width   = 960, 
