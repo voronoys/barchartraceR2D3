@@ -1,5 +1,6 @@
+//Thanks to Joel Zief: https://bl.ocks.org/jrzief/70f1f8a5d066a286da3a1e699823470f
+
 var tick_duration = options.tick_duration;
-    
 var top_n = options.top_n;
 var height = options.height;
 var width = options.width;
@@ -12,7 +13,7 @@ const margin = {
 };
   
 let bar_padding = (height-(margin.bottom+margin.top))/(top_n*5);
-      
+
 let title = svg.append('text')
   .attr('class', 'title')
   .attr('y', 24)
@@ -32,18 +33,21 @@ let caption = svg.append('text')
 
 let frame = options.first_frame;
 let last_frame = options.last_frame;
-     
+
 r2d3.onRender(function(data, svg, width, height, options) {
   
   svg.selectAll("g").remove();
+  svg.selectAll("rect.bar").remove();
+  svg.selectAll("text.label").remove();
+  svg.selectAll("text.valueLabel").remove();
   
   data.forEach(d => {
     d.value = +d.value,
     d.last_value = +d.last_value,
     d.value = isNaN(d.value) ? 0 : d.value,
     d.frame = +d.frame,
-    d.colour = d3.hsl(d.colour);
-    //d.colour = d3.hsl(Math.random()*360,0.75,0.75);
+    //d.colour = d3.hsl(d.colour);
+    d.colour = d3.hsl(Math.random()*360,0.75,0.75);
   });
     
   let frameSlice = data.filter(d => d.frame == frame && !isNaN(d.value))

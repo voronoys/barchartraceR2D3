@@ -38,7 +38,7 @@ material_page(
               label = "Transition duration (milliseconds)",
               min_value = 0,
               max_value = 1000,
-              initial_value = 500,
+              initial_value = 700,
               color = "blue"
             )
           ),
