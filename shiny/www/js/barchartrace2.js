@@ -62,7 +62,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
   .ticks(width > 500 ? 5:2)
   .tickSize(-(height-margin.top-margin.bottom))
   .tickFormat(d => d3.format(',')(d));
-  
+
   svg.append('g')
   .attr('class', 'axis xAxis')
   .attr('transform', `translate(0, ${margin.top})`)
@@ -81,6 +81,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
   .attr('height', y(1)-y(0)-bar_padding)
   .style('fill', d => d.colour);
   
+  svg.selectAll('text.label').remove();
   svg.selectAll('text.label')
   .data(frameSlice, d => d.name)
   .enter()
@@ -91,6 +92,7 @@ r2d3.onRender(function(data, svg, width, height, options) {
   .style('text-anchor', 'end')
   .html(d => d.name);
   
+  svg.selectAll('text.valueLabel').remove();
   svg.selectAll('text.valueLabel')
   .data(frameSlice, d => d.name)
   .enter()

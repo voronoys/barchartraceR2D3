@@ -34,6 +34,9 @@ let frame = options.first_frame;
 let last_frame = options.last_frame;
      
 r2d3.onRender(function(data, svg, width, height, options) {
+  
+  svg.selectAll("g").remove();
+  
   data.forEach(d => {
     d.value = +d.value,
     d.last_value = +d.last_value,
