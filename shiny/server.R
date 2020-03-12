@@ -14,7 +14,7 @@ server <- function(input, output, session) {
     
     r2d3(data = data_tst, 
          css = "www/styles.css", 
-         script = "www/js/barchartrace.js", 
+         script = "www/js/barchartrace2.js", 
          width = 960, 
          height = 600, 
          options = options)
