@@ -1,10 +1,11 @@
+##-- Packages
 library(dplyr)
 library(r2d3)
 
-# Options: Confirmed, Deaths, or Recovered
+##-- Options: Confirmed, Deaths, or Recovered
 types <- c("Confirmed", "Deaths", "Recovered")
 
-# reading
+##-- Reading
 dt <- data.table::rbindlist(
   lapply(types, function(type) {
     link <- sprintf("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-%s.csv", type)
@@ -13,19 +14,19 @@ dt <- data.table::rbindlist(
   })
 )
 
-# selecting vars
+##-- Selecting vars
 dt <- dt %>% 
   select(-Province.State, -Lat, -Long) %>% 
   rename(country = Country.Region) %>% 
   select(country, type, everything())
 
-# grouping
+##-- Grouping
 dt <- dt %>% 
   group_by(country, type) %>% 
   summarise_all(sum, na.rm = TRUE) %>% 
   ungroup() 
 
-# tidying
+##-- Tidying
 dt <- dt %>% 
   tidyr::pivot_longer(cols = 3:ncol(dt), 
                       names_to  = "date", 
@@ -34,10 +35,9 @@ dt <- dt %>%
   mutate(date = gsub(pattern = "\\.", replacement = "/", x = date)) %>% 
   mutate(date = as.Date(date, format = "%m/%d/%y"))
 
-# temporary
+##-- Temporary
 dt <- dt %>% 
   filter(type == "Confirmed")
-##
 
 dt <- dt %>%
   arrange(date) %>% 
@@ -60,36 +60,9 @@ dt <- dt %>%
          frame       = as.numeric(date) - 18282,
          colour      = "#32a852")
 
-##-- Plot
-options <- list(title         = "Coronavirus", 
-                subtitle      = "Experimental", 
-                caption       = "Source: John Hopkins University",
-                first_frame   = 1,
-                last_frame    = 48, 
-                top_n         = 12,
-                tick_duration = 500,
-                height        = 600,
-                width         = 960,
-                margin_top    = 80,
-                margin_right  = 0,
-                margin_bottom = 5,
-                margin_left   = 0)
-
-##-- para não termos essas gambiarras temos que trabalhar no js
 dt_aux <- dt %>% 
   rename(name = country) %>%
   filter(type == "Confirmed", !is.na(last_value)) %>%
-  group_by(name) %>%
   arrange(date) %>%
-  mutate(frame = 1:n()/10) %>%
-  ungroup() %>%
-  filter(name != "Mainland China")
-  
-r2d3(data    = dt_aux, 
-     css     = "shiny/www/styles.css", 
-     script  = "shiny/www/js/barchartrace.js", 
-     width   = 960, 
-     height  = 600, 
-     options = options)
-
-# didn't roll ... yet
+  mutate(frame = as.numeric(as.factor(date))) %>%
+  filter(name != "China")
