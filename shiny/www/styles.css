@@ -6,7 +6,7 @@ text.title{
   font-size: 24px;
   font-weight: 500;
 }
-text.subTitle{
+text.subtitle{
   font-weight: 500;
   fill: #777777;
 }
@@ -19,11 +19,11 @@ text.label{
   font-weight: 600;
 }
 
-text.valueLabel{
+text.value_label{
   font-weight: 300;
 }
 
-text.frameText{
+text.frame_text{
   font-size: 64px;
   font-weight: 700;
   opacity: 0.25;
