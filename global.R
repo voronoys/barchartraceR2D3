@@ -1,5 +1,6 @@
 ##-- Packages
 library(dplyr)
+library(tidyr)
 library(stringr)
 library(shiny)
 library(shinymaterial)
@@ -26,7 +27,7 @@ if(!file.exists(corona_file)) {
 }
 
 ##-- Data pacakges
-pkgs_file <- sprintf("data/R_packages_%s.RData", Sys.Date())
+pkgs_file <- "data/R_packages.RData"
 
 if(!file.exists(pkgs_file)) {
   data_pkgs <- get_pkgs_data()

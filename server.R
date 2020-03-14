@@ -37,7 +37,7 @@ server <- function(input, output, session) {
     
     r2d3(data = data_corona, 
          css = "www/styles.css", 
-         script = "www/js/barchartrace2.js", 
+         script = "www/js/barchartrace.js", 
          width = 960, 
          height = 600, 
          options = options)
@@ -45,10 +45,9 @@ server <- function(input, output, session) {
   
   ##-- Brands bar chart race
   output$brands <- renderD3({
-    browser()
     ##-- Inputs
     duration <- input$duration_brands
-    top_n <- input$top_brands
+    top_n <- input$top_n_brands
     
     ##-- Prepare R2D3
     frame_labels <- data_brands %>% 
@@ -67,7 +66,7 @@ server <- function(input, output, session) {
     
     r2d3(data = data_brands, 
          css = "www/styles.css", 
-         script = "www/js/barchartrace2.js", 
+         script = "www/js/barchartrace.js", 
          width = 960, 
          height = 600, 
          options = options)
@@ -77,7 +76,7 @@ server <- function(input, output, session) {
   output$pkgs <- renderD3({
     ##-- Inputs
     duration <- input$duration_pkgs
-    top_n <- input$top_pkgs
+    top_n <- input$top_n_pkgs
     
     ##-- Prepare R2D3
     data_pkgs <- data_pkgs %>%
@@ -99,7 +98,7 @@ server <- function(input, output, session) {
     
     r2d3(data = data_pkgs, 
          css = "www/styles.css", 
-         script = "www/js/barchartrace2.js", 
+         script = "www/js/barchartrace.js", 
          width = 960, 
          height = 600, 
          options = options)

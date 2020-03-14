@@ -83,9 +83,9 @@ get_corona_data <- function() {
 }
 
 ##-- R packages dataset
-get_pkgs_data <- function() {
+get_pkgs_data <- function(from = "2019-01-01", to = "2019-12-31") {
   top_lm <- cranlogs::cran_top_downloads(when = "last-month", count = 100)$package
-  data <- cranlogs::cran_downloads(packages = top_lm, from = "2019-01-01", to = Sys.Date()-1)
+  data <- cranlogs::cran_downloads(packages = top_lm, from = from, to = to)
   
   return(data)
 }
