@@ -14,6 +14,7 @@ server <- function(input, output, session) {
     ##-- Prepare data
     data_corona <- data_corona %>%
       filter(type == type_sel & name != "China") %>%
+      filter(value != 0) %>% 
       prepare_data(date = "date", date_label = "date", name = "name", value = "value", mood = mood) 
     
     ##-- Prepare R2D3
