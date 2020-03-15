@@ -35,3 +35,7 @@ if(!file.exists(pkgs_file)) {
 } else {
   load(pkgs_file)
 }
+
+##-- Global definitions
+height <- 515
+width <- "100%"
