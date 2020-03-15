@@ -1,5 +1,5 @@
 ##-- Function to prepare data for r2d3
-prepare_data <- function(data, date, date_label, name, value) {
+prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE, mood = "neutral") {
   
   if(is.null(date_label)) date_label <- date
   if(date_label == date) {
@@ -15,11 +15,15 @@ prepare_data <- function(data, date, date_label, name, value) {
            value = rlang::UQ(rlang::sym(value)))
   
   ##-- Ranks
+  if(cumulative) {
+    data <- data %>%
+      dplyr::arrange(date) %>%
+      dplyr::group_by(name) %>%
+      dplyr::mutate(value = cumsum(value)) %>%
+      dplyr::ungroup() 
+  }
+  
   data <- data %>%
-    dplyr::arrange(date) %>%
-    dplyr::group_by(name) %>%
-    dplyr::mutate(value = cumsum(value)) %>%
-    dplyr::ungroup() %>%
     dplyr::group_by(date) %>%
     dplyr::arrange(dplyr::desc(value)) %>%
     dplyr::mutate(rank = 1:n()) %>%
@@ -38,9 +42,12 @@ prepare_data <- function(data, date, date_label, name, value) {
     dplyr::arrange(date) %>%
     dplyr::mutate(frame = as.numeric(as.factor(date)))
   
+  ##-- Colors
+  data$colour <- make_palette(x = data$name, mood = mood)
+  
   ##-- Select
   data <- data %>%
-    select(date, frame, frame_label, name, rank, value, last_value)
+    select(date, frame, frame_label, name, colour, rank, value, last_value)
   
   return(data)
 }
@@ -101,4 +108,22 @@ saveWidgetFix <- function (widget, file, ...) {
   setwd(out_dir)
   
   htmlwidgets::saveWidget(widget, file = file, ...)
+}
+
+make_palette <- function(x, mood = "neutral") {
+  x <- as.character(x)
+  unique_groups <- unique(x)
+  
+  if(mood == "neutral") colors <- c("#67D0DD", "#9FE481", "#F6E785", "#FAAFA5", "#DC95DD", "#A885EE")
+  if(mood == "happy") colors <- c("#7BB661", "#C4DE6F", "#FF5348", "#FEF65C", "#00B9FC", "#0984FC")
+  if(mood == "sad") colors <- c("#4B4AA7", "#7F78D2", "#FDECFF", "#CC6A87", "#AF5B7C")
+  
+  n_colors <- length(unique_groups)
+  
+  palette <- colorRampPalette(colors = colors)(n_colors)
+  palette <- sample(x = palette, size = n_colors, replace = FALSE)
+  names(palette) <- unique_groups
+  
+  out_colors <- palette[x]
+  return(out_colors)
 }
