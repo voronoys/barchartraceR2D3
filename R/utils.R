@@ -89,3 +89,16 @@ get_pkgs_data <- function(from = "2019-01-01", to = "2019-12-31") {
   
   return(data)
 }
+
+saveWidgetFix <- function (widget, file, ...) {
+  ##-- https://github.com/ramnathv/htmlwidgets/issues/299
+  wd <- getwd()
+  on.exit(setwd(wd))
+  
+  out_dir <- dirname(file)
+  file <- basename(file)
+  
+  setwd(out_dir)
+  
+  htmlwidgets::saveWidget(widget, file = file, ...)
+}

@@ -44,3 +44,7 @@ text.frame_text{
 path.domain{
   display: none;
 }
+
+body {
+  padding: 0;
+}

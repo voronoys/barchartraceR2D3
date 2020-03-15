@@ -136,9 +136,7 @@ let frame_text = svg.append('text')
 update_frame_lbl();
 
 let ticker = d3.interval(e => {
-  
-  //console.log(frame);
-    
+
   frame_slice = data.filter(d => d.frame == frame && !isNaN(d.value))
     .sort((a,b) => b.value - a.value)
     .slice(0, top_n);

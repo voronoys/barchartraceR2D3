@@ -1,6 +1,6 @@
 server <- function(input, output, session) {
   ##-- COVID-19 bar chart race
-  output$corona <- renderD3({
+  output$corona <- renderUI({
     ##-- Inputs
     duration <- input$duration_corona
     top_n <- input$top_n_corona
@@ -35,16 +35,21 @@ server <- function(input, output, session) {
                     margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
                     frame_labels = frame_labels)
     
-    r2d3(data = data_corona, 
-         css = "www/styles.css", 
-         script = "www/js/barchartrace.js", 
-         width = 960, 
-         height = 600, 
-         options = options)
+    gd3 <- r2d3(data = data_corona, 
+                css = "www/styles.css", 
+                script = "www/js/barchartrace.js", 
+                width = width, 
+                height = height, 
+                options = options)
+    
+    file_out <- "www/out_bcr/corona.html"
+    saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
+    
+    tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
   })
   
   ##-- Brands bar chart race
-  output$brands <- renderD3({
+  output$brands <- renderUI({
     ##-- Inputs
     duration <- input$duration_brands
     top_n <- input$top_n_brands
@@ -64,24 +69,32 @@ server <- function(input, output, session) {
                     margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
                     frame_labels = frame_labels)
     
-    r2d3(data = data_brands, 
-         css = "www/styles.css", 
-         script = "www/js/barchartrace.js", 
-         width = 960, 
-         height = 600, 
-         options = options)
+    gd3 <- r2d3(data = data_brands, 
+                css = "www/styles.css", 
+                script = "www/js/barchartrace.js", 
+                width = width, 
+                height = height, 
+                options = options)
+    
+    file_out <- "www/out_bcr/brands.html"
+    saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
+    
+    tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
   })
   
   ##-- R packages bar chart race
-  output$pkgs <- renderD3({
+  output$pkgs <- renderUI({
     ##-- Inputs
     duration <- input$duration_pkgs
     top_n <- input$top_n_pkgs
     
     ##-- Prepare R2D3
     data_pkgs <- data_pkgs %>%
-      prepare_data(date = "date", date_label = "date", name = "package", value = "count") 
-    
+      mutate(month = month(date, abbr = TRUE, label = TRUE), 
+             day = day(date),
+             frame_label = paste0(month, "/", day)) %>%
+      prepare_data(date = "date", date_label = "frame_label", name = "package", value = "count") 
+
     frame_labels <- data_pkgs %>% 
       group_by(frame) %>%
       summarise(frame_label = first(frame_label)) %>%
@@ -96,12 +109,17 @@ server <- function(input, output, session) {
                     margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
                     frame_labels = frame_labels)
     
-    r2d3(data = data_pkgs, 
-         css = "www/styles.css", 
-         script = "www/js/barchartrace.js", 
-         width = 960, 
-         height = 600, 
-         options = options)
+    gd3 <- r2d3(data = data_pkgs, 
+                css = "www/styles.css", 
+                script = "www/js/barchartrace.js", 
+                width = width, 
+                height = height, 
+                options = options)
+    
+    file_out <- "www/out_bcr/pkgs.html"
+    saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
+    
+    tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
   })
   
   output$audio <- renderUI({

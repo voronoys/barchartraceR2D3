@@ -69,7 +69,8 @@ material_page(
             width = 12,
             material_card(
               title = "",
-              d3Output(outputId = "corona", height = '600px')
+              # d3Output(outputId = "corona", height = '600px')
+              htmlOutput(outputId = "corona", height = '515px')
             )
           )
         )
@@ -121,7 +122,8 @@ material_page(
             width = 12,
             material_card(
               title = "",
-              d3Output(outputId = "brands", height = '600px')
+              # d3Output(outputId = "brands", height = '600px')
+              htmlOutput(outputId = "brands", height = '515px')
             )
           )
         )
@@ -173,7 +175,8 @@ material_page(
             width = 12,
             material_card(
               title = "",
-              d3Output(outputId = "pkgs", height = '600px')
+              # d3Output(outputId = "pkgs", height = '600px')
+              htmlOutput(outputId = "pkgs", height = '515px')
             )
           )
         )
