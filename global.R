@@ -4,6 +4,9 @@ library(tidyr)
 library(stringr)
 library(shiny)
 library(shinymaterial)
+library(shinycssloaders)
+library(shinyWidgets)
+library(shinyBS)
 library(r2d3)
 library(cranlogs)
 library(lubridate)
@@ -12,9 +15,6 @@ source(file = "R/utils.R")
 
 ##-- Data brands
 data_brands <- read.table(file = "data/brand_values.csv", sep = ",", dec = ".", header = TRUE, quote = "\"")
-data_brands <- data_brands %>%
-  mutate(frame_label = str_sub(string = year, start = 1, end = 4)) %>%
-  prepare_data(date = "year", date_label = "frame_label", name = "name", value = "value", mood = "neutral")
 
 ##-- Data corona
 corona_file <- sprintf("data/corona_%s.RData", Sys.Date())
@@ -63,3 +63,4 @@ data_pop <- full_data %>%
 ##-- Global definitions
 height <- 515
 width <- "100%"
+col_spinner <- "#2196F3" 
