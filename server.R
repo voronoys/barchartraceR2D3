@@ -170,6 +170,27 @@ server <- function(input, output, session) {
   })
   
   ##-- User bar chart race
+  data_user <- eventReactive(input$dataset_user, {
+    input_file <- input$dataset_user
+    
+    if(is.null(input_file)) {
+      return(NULL)
+    } else {
+      out <- read.csv(input_file$datapath, header = TRUE)
+    }
+    
+    return(out)
+  })
+  observe({
+    out <- data_user()
+    
+    names <- colnames(out)
+    shinyWidgets::updatePickerInput(session = session, inputId = "name_user", choices = names)
+    shinyWidgets::updatePickerInput(session = session, inputId = "date_user", choices = names)
+    shinyWidgets::updatePickerInput(session = session, inputId = "date_label_user", choices = names)
+    shinyWidgets::updatePickerInput(session = session, inputId = "count_user", choices = names)
+    shinyWidgets::updatePickerInput(session = session, inputId = "colour_user", choices = names)
+  })
   output$user <- renderUI({
     ##-- Inputs
     duration <- input$duration_user

@@ -2,6 +2,7 @@ material_page(
   title = "",
   include_nav_bar = FALSE,
   tags$nav(htmlOutput("audio"), class = "blue"),
+  shiny::includeCSS("www/styles_global.css"),
   material_side_nav(
     fixed = TRUE, 
     image_source = "img/material.png",
@@ -244,55 +245,67 @@ material_page(
       material_column(
         width = 10,
         offset = 1,
-        # material_row(
-        #   material_column(
-        #     width = 6,
-        #     material_dropdown(
-        #       input_id = "mood_user",
-        #       label = "Theme mood", 
-        #       choices = c("Happy", "Neutral", "Sad"), 
-        #       selected = "Neutral", 
-        #       color = "blue"
-        #     )
-        #   ),
-        #   material_column(
-        #     width = 3,
-        #     material_slider(
-        #       input_id = "duration_user",
-        #       label = "Transition duration (milliseconds)",
-        #       min_value = 0,
-        #       max_value = 1000,
-        #       initial_value = 250,
-        #       color = "blue"
-        #     )
-        #   ),
-        #   material_column(
-        #     width = 3,
-        #     material_slider(
-        #       input_id = "top_n_user",
-        #       label = "Number of bars",
-        #       min_value = 2,
-        #       max_value = 15,
-        #       initial_value = 10,
-        #       color = "blue"
-        #     )
-        #   )
-        # ),
         material_row(
           material_column(
             width = 12,
-            actionBttn(inputId = "data_user",
-                       label = "Upload",
-                       color = "primary",
-                       style = "bordered", 
-                       icon = icon("upload")),
-            conditionalPanel(condition = "input.data_user",
+            shinymaterial::material_modal(
+              modal_id = "upload_modal", 
+              button_text = "Upload", 
+              button_icon = "cloud_upload", 
+              button_color = "teal lighten-3", 
+              floating_button = TRUE, 
+              close_button_label = "Cancel",
+              title = "Upload your data",
+              span('The data set must have at least three columns: date, name and count.'),
+              fileInput(inputId = "dataset_user", 
+                        label = "Upload", 
+                        accept = c(
+                          "text/csv",
+                          "text/comma-separated-values,text/plain",
+                          ".csv"
+                        )
+              ),
+              material_column(
+                width = 12,
+                material_column(width = 2,
+                                shinyWidgets::pickerInput(inputId = "name_user", label = "Name column", choices = character(0))
+                ),
+                material_column(width = 2,
+                                shinyWidgets::pickerInput(inputId = "date_user", label = "Date column", choices = character(0))
+                ),
+                material_column(width = 2,
+                                shinyWidgets::pickerInput(inputId = "date_label_user", label = "Date label column", choices = character(0))
+                ),
+                material_column(width = 2,
+                                shinyWidgets::pickerInput(inputId = "count_user", label = "Count column", choices = character(0))
+                ),
+                material_column(width = 2,
+                                shinyWidgets::pickerInput(inputId = "colour_user", label = "Colour column", choices = character(0))
+                )
+              ),
+              tags$style("height:'600px'")
+            ),
+            conditionalPanel(condition = "input.upload_data_user",
                              material_card(
                                title = "",
                                shinycssloaders::withSpinner(
                                  htmlOutput(outputId = "user", height = '515px'), 
                                  type = 4, 
                                  color = col_spinner)
+                             )
+            ),
+            conditionalPanel(condition = "!input.upload_data_user",
+                             material_card(
+                               title = "Instructions",
+                               p("Select your data set below! It must contains at least 3 columns:"),
+                               tags$ul(
+                                 tags$li(p(HTML("<b>name</b>: a column indicating the group or name of each bar."))),
+                                 tags$li(p(HTML("<b>date</b>: a date column or at leats a numerical one."))),
+                                 tags$li(p(HTML("<b>count</b>: the value to be displayed.")))
+                               ),
+                               p("It is still possible to define the frame label and the bar colors.
+                                  If the colors are not present then a random set of colors are going to be used based on the mood."),
+                               p("Do not forget to inform if the values must to be cumulative or not!")
                              )
             )
           )
