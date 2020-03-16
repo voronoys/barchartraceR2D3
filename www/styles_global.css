@@ -4,3 +4,11 @@
     background-color: #2196f3;
     color: white;
 }
+
+#upload_modal {
+  height: 500px;
+}
+
+.bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+  color: white;
+}
