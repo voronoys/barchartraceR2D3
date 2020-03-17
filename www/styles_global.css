@@ -1,3 +1,13 @@
+.IN-widget {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: top !important;
+    padding: 0px;
+    margin: 0px;
+    text-indent: 0px;
+    text-align: center;
+}
+
 .bttn-bordered.bttn-primary {
   border-color: rgba(29,137,255,.4);
   color: #1d89ff;

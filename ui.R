@@ -72,7 +72,47 @@ material_page(
             width = 12,
             material_card(
               title = "",
-              shinycssloaders::withSpinner(htmlOutput(outputId = "corona", height = '515px'), type = 4, color = col_spinner) 
+              shinycssloaders::withSpinner(htmlOutput(outputId = "corona", height = '515px'), type = 4, color = col_spinner),
+              tags$br(),
+              tags$div(
+                ##Twitter
+                tags$div(
+                  style="display: inline;",
+                  tags$a(href = "https://twitter.com/share?ref_src=twsrc%5Etfw", 
+                         class = "twitter-share-button", 
+                         `data-hashtags` = "#rstats #rstudio #shinycontest", 
+                         `data-show-count` = "true", 
+                         `data-text1` = "It's my barchartrace!",
+                         "Tweet"),
+                  tags$script(`async src`="https://platform.twitter.com/widgets.js", charset="utf-8")
+                ),
+                
+                ##Facebbok
+                tags$iframe(
+                  src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                  width="120",
+                  height="20",
+                  style="border:none;overflow:hidden",
+                  scrolling="no",
+                  frameborder="0",
+                  allowTransparency="true",
+                  allow="encrypted-media"
+                ),
+                tags$div(
+                  style="display: inline;",
+                ## Linkedin
+                tags$script(
+                  src = "https://platform.linkedin.com/in.js",
+                  type = "text/javascript",
+                  "lang: en_US"
+                ),
+                tags$script(
+                  type = "IN/Share",
+                  style = "vertical-align: top !important;",
+                  `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                )
+                )
+              )
             )
           )
         )
