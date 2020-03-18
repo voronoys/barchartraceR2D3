@@ -9,10 +9,10 @@ prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE,
   
   ##-- Renaming
   data <- data %>%
-    rename(date = rlang::UQ(rlang::sym(date)),
-           frame_label = rlang::UQ(rlang::sym(date_label)),
-           name = rlang::UQ(rlang::sym(name)),
-           value = rlang::UQ(rlang::sym(value)))
+    rename(date = rlang::expr(!!date),
+           frame_label = rlang::expr(!!date_label),
+           name = rlang::expr(!!name),
+           value = rlang::expr(!!value))
   
   ##-- Ranks
   if(cumulative) {
@@ -38,7 +38,7 @@ prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE,
 
   ##-- Frame and frame label
   data <- data %>%
-    dplyr::filter(!is.na(last_value)) %>%
+    dplyr::mutate(last_value = if_else(is.na(last_value), 0L, last_value)) %>%
     dplyr::arrange(date) %>%
     dplyr::mutate(frame = as.numeric(as.factor(date)))
   
