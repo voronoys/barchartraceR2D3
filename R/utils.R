@@ -38,7 +38,7 @@ prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE,
 
   ##-- Frame and frame label
   data <- data %>%
-    dplyr::mutate(last_value = if_else(is.na(last_value), 0L, last_value)) %>%
+    dplyr::mutate(last_value = if_else(is.na(last_value), 0, as.numeric(last_value))) %>%
     dplyr::arrange(date) %>%
     dplyr::mutate(frame = as.numeric(as.factor(date)))
   
