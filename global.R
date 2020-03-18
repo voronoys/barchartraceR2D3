@@ -14,13 +14,13 @@ library(lubridate)
 source(file = "R/utils.R")
 
 ##-- Data corona
-corona_file <- sprintf("data/corona_%s.RData", Sys.Date())
+corona_file <- sprintf("data/corona_%s.csv", Sys.Date())
 
 if(!file.exists(corona_file)) {
   data_corona <- get_corona_data()
-  save(data_corona, file = corona_file)
+  write.csv(x = data_corona, file = corona_file, sep = ";", row.names = FALSE)
 } else {
-  load(corona_file)
+  data_corona <- read.table(file = corona_file, sep = ";", dec = ".", header = TRUE)
 }
 
 ##-- Data brands
