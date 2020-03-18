@@ -1,18 +1,31 @@
 .IN-widget {
     display: inline-block;
     line-height: 1;
-    vertical-align: top !important;
-    padding: 0px;
+    vertical-align: top !important; 
     margin: 0px;
     text-indent: 0px;
     text-align: center;
 }
 
+.IN-2bc0215c-7188-4274-b598-1969e06d4d7c-1G9ISYhSF8XoOmdcl0yKDu.IN-2bc0215c-7188-4274-b598-1969e06d4d7c-3uCBSbQNVNf2QjqHe1rfb6>xdoor-icon>svg, .IN-2bc0215c-7188-4274-b598-1969e06d4d7c-1G9ISYhSF8XoOmdcl0yKDu>xdoor-icon>svg {
+    height: 15px!important;
+    width: 20px!important;
+    vertical-align: sub;
+    padding-left: 3px;
+}
+
 .bttn-bordered.bttn-primary {
   border-color: rgba(29,137,255,.4);
   color: #1d89ff;
-    background-color: #2196f3;
-    color: white;
+  background-color: #2196f3;
+  color: white;
+  vertical-align: super;
+}
+
+.bttn-bordered.bttn-xs {
+    font-size: 10px;
+    font-family: inherit;
+    height: 20px;
 }
 
 #upload_modal {
@@ -21,4 +34,8 @@
 
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
   color: white;
+}
+
+a {
+  color: #fff;
 }
