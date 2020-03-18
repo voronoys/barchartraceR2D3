@@ -18,7 +18,7 @@ corona_file <- sprintf("data/corona_%s.csv", Sys.Date())
 
 if(!file.exists(corona_file)) {
   data_corona <- get_corona_data()
-  write.csv(x = data_corona, file = corona_file, sep = ";", row.names = FALSE)
+  write.table(x = data_corona, file = corona_file, sep = ";", row.names = FALSE)
 } else {
   data_corona <- read.table(file = corona_file, sep = ";", dec = ".", header = TRUE)
 }
