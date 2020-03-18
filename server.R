@@ -49,6 +49,14 @@ server <- function(input, output, session) {
     
     tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
   })
+  output$corona_download <- downloadHandler(
+    filename = function() {
+      sprintf("covid19_%s.html", Sys.Date())
+    },
+    content = function(con) {
+      file.copy(from = "www/out_bcr/corona.html", con)
+    }
+  )
   
   ##-- Brands bar chart race
   output$brands <- renderUI({
@@ -88,6 +96,14 @@ server <- function(input, output, session) {
     
     tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
   })
+  output$brands_download <- downloadHandler(
+    filename = function() {
+      "brands.html"
+    },
+    content = function(con) {
+      file.copy(from = "www/out_bcr/brands.html", con)
+    }
+  )
   
   ##-- R packages bar chart race
   output$pkgs <- renderUI({
@@ -129,45 +145,53 @@ server <- function(input, output, session) {
     
     tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
   })
+  output$pkgs_download <- downloadHandler(
+    filename = function() {
+      "R_packages.html"
+    },
+    content = function(con) {
+      file.copy(from = "www/out_bcr/pkgs.html", con)
+    }
+  )
   
-  ##-- Urband population bar chart race
-  output$pop <- renderUI({
-    ##-- Inputs
-    duration <- input$duration_pop
-    top_n <- input$top_n_pop
-    mood <- input$mood_pop
-    
-    ##-- Prepare R2D3
-    data_pop <- data_pop %>%
-      prepare_data(date = "year", date_label = "frame_label", name = "name", value = "pop_interpolation", cumulative = FALSE, mood = mood) %>%
-      filter(rank < 20) 
-    
-    frame_labels <- data_pop %>% 
-      group_by(frame) %>%
-      summarise(frame_label = first(frame_label)) %>%
-      .$frame_label
-    
-    options <- list(title = "The most populous cities", 
-                    subtitle = "3500 BC - 2000 AC", 
-                    caption = "Source: Nasa Earth Data’s Historical Urban Population",
-                    first_frame = 1, last_frame = max(data_pop$frame), 
-                    top_n = top_n, tick_duration = duration,
-                    height = 600, width = 960,
-                    margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
-                    frame_labels = frame_labels)
-    
-    gd3 <- r2d3(data = data_pop, 
-                css = "www/styles.css", 
-                script = "www/js/barchartrace.js", 
-                width = width, 
-                height = height, 
-                options = options)
-    
-    file_out <- "www/out_bcr/brands.html"
-    saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
-    
-    tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
-  })
+  # ##-- Urband population bar chart race
+  # output$pop <- renderUI({
+  #   ##-- Inputs
+  #   duration <- input$duration_pop
+  #   top_n <- input$top_n_pop
+  #   mood <- input$mood_pop
+  #   
+  #   ##-- Prepare R2D3
+  #   data_pop <- data_pop %>%
+  #     prepare_data(date = "year", date_label = "frame_label", name = "name", value = "pop_interpolation", cumulative = FALSE, mood = mood) %>%
+  #     filter(rank < 20) 
+  #   
+  #   frame_labels <- data_pop %>% 
+  #     group_by(frame) %>%
+  #     summarise(frame_label = first(frame_label)) %>%
+  #     .$frame_label
+  #   
+  #   options <- list(title = "The most populous cities", 
+  #                   subtitle = "3500 BC - 2000 AC", 
+  #                   caption = "Source: Nasa Earth Data’s Historical Urban Population",
+  #                   first_frame = 1, last_frame = max(data_pop$frame), 
+  #                   top_n = top_n, tick_duration = duration,
+  #                   height = 600, width = 960,
+  #                   margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
+  #                   frame_labels = frame_labels)
+  #   
+  #   gd3 <- r2d3(data = data_pop, 
+  #               css = "www/styles.css", 
+  #               script = "www/js/barchartrace.js", 
+  #               width = width, 
+  #               height = height, 
+  #               options = options)
+  #   
+  #   file_out <- "www/out_bcr/brands.html"
+  #   saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
+  #   
+  #   tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
+  # })
   
   ##-- User bar chart race
   data_user <- eventReactive(input$dataset_user, {

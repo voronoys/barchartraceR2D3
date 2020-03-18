@@ -11,10 +11,9 @@ material_page(
         "Corona virus race" = "cv_race",
         "Brands race" = "b_race",
         "R packages race" = "pkgs_race",
-        "Urban population race" = "pop_race",
         "Upload your own data" = "upload_data"
       ),
-      icons = c("ac_unit", "copyright", "build", "person_pin_circle", "cloud_upload")
+      icons = c("ac_unit", "copyright", "build", "cloud_upload")
     )
   ),
   material_side_nav_tab_content(
@@ -67,53 +66,53 @@ material_page(
             )
           )
         ),
-        material_row(
-          material_column(
-            width = 12,
-            material_card(
-              title = "",
-              shinycssloaders::withSpinner(htmlOutput(outputId = "corona", height = '515px'), type = 4, color = col_spinner),
-              tags$br(),
-              tags$div(
-                ##Twitter
-                tags$div(
-                  style="display: inline;",
-                  tags$a(href = "https://twitter.com/share?ref_src=twsrc%5Etfw", 
-                         class = "twitter-share-button", 
-                         `data-hashtags` = "#rstats #rstudio #shinycontest", 
-                         `data-show-count` = "true", 
-                         `data-text1` = "It's my barchartrace!",
-                         "Tweet"),
-                  tags$script(`async src`="https://platform.twitter.com/widgets.js", charset="utf-8")
-                ),
-                
-                ##Facebbok
-                tags$iframe(
-                  src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
-                  width="120",
-                  height="20",
-                  style="border:none;overflow:hidden",
-                  scrolling="no",
-                  frameborder="0",
-                  allowTransparency="true",
-                  allow="encrypted-media"
-                ),
-                tags$div(
-                  style="display: inline;",
-                ## Linkedin
-                tags$script(
-                  src = "https://platform.linkedin.com/in.js",
-                  type = "text/javascript",
-                  "lang: en_US"
-                ),
-                tags$script(
-                  type = "IN/Share",
-                  style = "vertical-align: top !important;",
-                  `data-url` = "https://voronoys.shinyapps.io/voronoys"
-                )
-                )
-              )
-            )
+        material_card(
+          title = "", 
+          material_card(
+            title = "",
+            shinycssloaders::withSpinner(htmlOutput(outputId = "corona", height = '515px'), type = 4, color = col_spinner),
+          ),
+          
+          ##-- Social networks
+          tags$div(style = "display: inline; vertical-align: top;",
+                   ##-- Twitter
+                   tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
+                          class = "twitter-share-button", 
+                          `data-hashtags` = "#rstats #rstudio #shinycontest #covid19 #coronavirus", 
+                          `data-show-count` = "true", 
+                          `data-text1` = "It's my barchart race!",
+                          id = "corona"),
+                   tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
+                   
+                   ##-- Facebook
+                   tags$iframe(
+                     src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                     width = "115",
+                     height = "20",
+                     scrolling = "no",
+                     frameborder = "0",
+                     allowTransparency = "true",
+                     allow = "encrypted-media"
+                   ),
+                   
+                   ##-- LinkedIn
+                   tags$script(
+                     src = "https://platform.linkedin.com/in.js",
+                     type = "text/javascript",
+                     "lang: en_US"
+                   ),
+                   tags$script(
+                     type = "IN/Share",
+                     `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                   ),
+          ),
+          
+          ##-- Download HTML
+          downloadBttn(
+            outputId = "corona_download",
+            style = "bordered",
+            color = "primary",
+            size = "xs"
           )
         )
       )
@@ -160,13 +159,53 @@ material_page(
             )
           )
         ),
-        material_row(
-          material_column(
-            width = 12,
-            material_card(
-              title = "",
-              shinycssloaders::withSpinner(htmlOutput(outputId = "brands", height = '515px'), type = 4, color = col_spinner)
-            )
+        material_card(
+          title = "",
+          width = 12,
+          material_card(
+            title = "",
+            shinycssloaders::withSpinner(htmlOutput(outputId = "brands", height = '515px'), type = 4, color = col_spinner)
+          ),
+          ##-- Social networks
+          tags$div(style = "display: inline; vertical-align: top;",
+                   ##-- Twitter
+                   tags$a(href = "https://twitter.com/share?ref_src=twsrc%5Etfw", 
+                          class = "twitter-share-button", 
+                          `data-hashtags` = "#rstats #rstudio #shinycontest", 
+                          `data-show-count` = "true", 
+                          `data-text1` = "It's my barchart race!",
+                          id = "brands"),
+                   tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
+                   
+                   ##-- Facebook
+                   tags$iframe(
+                     src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                     width = "115",
+                     height = "20",
+                     scrolling = "no",
+                     frameborder = "0",
+                     allowTransparency = "true",
+                     allow = "encrypted-media"
+                   ),
+                   
+                   ##-- LinkedIn
+                   tags$script(
+                     src = "https://platform.linkedin.com/in.js",
+                     type = "text/javascript",
+                     "lang: en_US"
+                   ),
+                   tags$script(
+                     type = "IN/Share",
+                     `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                   ),
+          ),
+          
+          ##-- Download HTML
+          downloadBttn(
+            outputId = "brands_download",
+            style = "bordered",
+            color = "primary",
+            size = "xs"
           )
         )
       )
@@ -214,11 +253,53 @@ material_page(
           )
         ),
         material_row(
-          material_column(
+          material_card(
+            title = "", 
             width = 12,
             material_card(
               title = "",
               shinycssloaders::withSpinner(htmlOutput(outputId = "pkgs", height = '515px'), type = 4, color = col_spinner) 
+            ),
+            ##-- Social networks
+            tags$div(style = "display: inline; vertical-align: top;",
+                     ##-- Twitter
+                     tags$a(href = "https://twitter.com/share?ref_src=twsrc%5Etfw", 
+                            class = "twitter-share-button", 
+                            `data-hashtags` = "#rstats #rstudio #shinycontest", 
+                            `data-show-count` = "true", 
+                            `data-text1` = "It's my barchart race!",
+                            id = "pkgs"),
+                     tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
+                     
+                     ##-- Facebook
+                     tags$iframe(
+                       src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                       width = "115",
+                       height = "20",
+                       scrolling = "no",
+                       frameborder = "0",
+                       allowTransparency = "true",
+                       allow = "encrypted-media"
+                     ),
+                     
+                     ##-- LinkedIn
+                     tags$script(
+                       src = "https://platform.linkedin.com/in.js",
+                       type = "text/javascript",
+                       "lang: en_US"
+                     ),
+                     tags$script(
+                       type = "IN/Share",
+                       `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                     ),
+            ),
+            
+            ##-- Download HTML
+            downloadBttn(
+              outputId = "pkgs_download",
+              style = "bordered",
+              color = "primary",
+              size = "xs"
             )
           )
         )
@@ -272,6 +353,47 @@ material_page(
             material_card(
               title = "",
               shinycssloaders::withSpinner(htmlOutput(outputId = "pop", height = '515px'), type = 4, color = col_spinner) 
+            ),
+            ##-- Social networks
+            tags$div(style = "display: inline; vertical-align: top;",
+                     ##-- Twitter
+                     tags$a(href = "https://twitter.com/share?ref_src=twsrc%5Etfw", 
+                            class = "twitter-share-button", 
+                            `data-hashtags` = "#rstats #rstudio #shinycontest", 
+                            `data-show-count` = "true", 
+                            `data-text1` = "It's my barchart race!",
+                            id = "pop"),
+                     tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
+                     
+                     ##-- Facebook
+                     tags$iframe(
+                       src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                       width = "115",
+                       height = "20",
+                       scrolling = "no",
+                       frameborder = "0",
+                       allowTransparency = "true",
+                       allow = "encrypted-media"
+                     ),
+                     
+                     ##-- LinkedIn
+                     tags$script(
+                       src = "https://platform.linkedin.com/in.js",
+                       type = "text/javascript",
+                       "lang: en_US"
+                     ),
+                     tags$script(
+                       type = "IN/Share",
+                       `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                     ),
+            ),
+            
+            ##-- Download HTML
+            downloadBttn(
+              outputId = "pop_download",
+              style = "bordered",
+              color = "primary",
+              size = "xs"
             )
           )
         )
