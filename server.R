@@ -1,4 +1,6 @@
 server <- function(input, output, session) {
+  runjs("$('#dataset_user').parent().removeClass('btn-default').addClass('btn-danger');")
+  
   ##-- COVID-19 bar chart race
   output$corona <- renderUI({
     ##-- Inputs
@@ -14,35 +16,25 @@ server <- function(input, output, session) {
     ##-- Prepare data
     data_corona <- data_corona %>%
       filter(type == type_sel & name != "China") %>%
-      filter(value != 0) %>% 
-      prepare_data(date = "date", date_label = "date", name = "name", value = "value", mood = mood, cumulative = FALSE) 
+      filter(value != 0)
     
     ##-- Prepare R2D3
-    frame_labels <- data_corona %>% 
-      group_by(frame) %>%
-      summarise(frame_label = first(frame_label)) %>%
-      .$frame_label
-    
     subtitle <- switch(type_sel,
                        "Confirmed" = "Confirmed cases (cumulative)",
                        "Deaths" = "Number of deaths (cumulative)",
                        "Recovered" = "Number of recovered (cumulative)")
     
-    options <- list(title = "Covid-19 outside China", 
-                    subtitle = subtitle, 
-                    caption = "Source: John Hopkins University",
-                    first_frame = 1, last_frame = max(data_corona$frame), 
-                    top_n = top_n, tick_duration = duration,
-                    height = 600, width = 960,
-                    margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
-                    frame_labels = frame_labels)
-    
-    gd3 <- r2d3(data = data_corona, 
-                css = "www/styles.css", 
-                script = "www/js/barchartrace.js", 
-                width = width, 
-                height = height, 
-                options = options)
+    gd3 <- barchartrace_r2d3(
+      data = data_corona, 
+      name = "name", date = "date", value = "value", date_label = "date", colour = "name", 
+      cumulative = FALSE, 
+      title = "Covid-19 outside China", 
+      subtitle = subtitle, 
+      caption = "Source: John Hopkins University", 
+      mood = mood, top_n = top_n, duration = duration, 
+      css = "www/styles.css", script = "www/js/barchartrace.js", 
+      width = width, height = height
+    )
     
     file_out <- "www/out_bcr/corona.html"
     saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
@@ -67,29 +59,19 @@ server <- function(input, output, session) {
     
     ##-- Prepare R2D3
     data_brands <- data_brands %>%
-      mutate(frame_label = str_sub(string = year, start = 1, end = 4)) %>%
-      prepare_data(date = "year", date_label = "frame_label", name = "name", value = "value", mood = mood)
-    
-    frame_labels <- data_brands %>% 
-      group_by(frame) %>%
-      summarise(frame_label = first(frame_label)) %>%
-      .$frame_label
-    
-    options <- list(title = "18 years of Interbrand’s Top Global Brands", 
-                    subtitle = "Brand value, $m", 
-                    caption = "Source: Interbrand",
-                    first_frame = 1, last_frame = max(data_brands$frame), 
-                    top_n = top_n, tick_duration = duration,
-                    height = 600, width = 960,
-                    margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
-                    frame_labels = frame_labels)
-    
-    gd3 <- r2d3(data = data_brands, 
-                css = "www/styles.css", 
-                script = "www/js/barchartrace.js", 
-                width = width, 
-                height = height, 
-                options = options)
+      mutate(frame_label = str_sub(string = year, start = 1, end = 4))
+
+    gd3 <- barchartrace_r2d3(
+      data = data_brands, 
+      name = "name", date = "year", value = "value", date_label = "frame_label", colour = "name", 
+      cumulative = FALSE, 
+      title = "18 years of Interbrand’s Top Global Brands", 
+      subtitle = "Brand value, $m", 
+      caption = "Source: Interbrand", 
+      mood = mood, top_n = top_n, duration = duration, 
+      css = "www/styles.css", script = "www/js/barchartrace.js", 
+      width = width, height = height
+    )
     
     file_out <- "www/out_bcr/brands.html"
     saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
@@ -116,29 +98,19 @@ server <- function(input, output, session) {
     data_pkgs <- data_pkgs %>%
       mutate(month = month(date, abbr = TRUE, label = TRUE), 
              day = day(date),
-             frame_label = paste0(month, "/", day)) %>%
-      prepare_data(date = "date", date_label = "frame_label", name = "package", value = "count", mood = mood) 
+             frame_label = paste0(month, "/", day))
     
-    frame_labels <- data_pkgs %>% 
-      group_by(frame) %>%
-      summarise(frame_label = first(frame_label)) %>%
-      .$frame_label
-    
-    options <- list(title = "Most downloaded R packages in 2019", 
-                    subtitle = "Based on the 100 most downloaded packages last month", 
-                    caption = "Source: cranlogs",
-                    first_frame = 1, last_frame = max(data_pkgs$frame), 
-                    top_n = top_n, tick_duration = duration,
-                    height = 600, width = 960,
-                    margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
-                    frame_labels = frame_labels)
-    
-    gd3 <- r2d3(data = data_pkgs, 
-                css = "www/styles.css", 
-                script = "www/js/barchartrace.js", 
-                width = width, 
-                height = height, 
-                options = options)
+    gd3 <- barchartrace_r2d3(
+      data = data_pkgs, 
+      name = "package", date = "date", value = "count", date_label = "frame_label", colour = "package", 
+      cumulative = TRUE, 
+      title = "Most downloaded R packages in 2019", 
+      subtitle = "Based on the 100 most downloaded packages last month", 
+      caption = "Source: cranlogs", 
+      mood = mood, top_n = top_n, duration = duration, 
+      css = "www/styles.css", script = "www/js/barchartrace.js", 
+      width = width, height = height
+    )
     
     file_out <- "www/out_bcr/pkgs.html"
     saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
@@ -200,7 +172,35 @@ server <- function(input, output, session) {
     if(is.null(input_file)) {
       return(NULL)
     } else {
-      out <- read.csv(input_file$datapath, header = TRUE)
+      input_file <- input_file$datapath
+      ext <- tools::file_ext(input_file)
+      
+      if(ext != "csv") {
+        sendSweetAlert(
+          width = "1000px",
+          session = session,
+          title = "Error...",
+          text = "We can only accept csv files at the moment.",
+          type = "error"
+        )
+        
+        out <- NULL
+      } else {
+        out <- read.table(input_file, header = TRUE, sep = ";", quote = "\"")
+        if(ncol(out) == 1) out <- read.table(input_file, header = TRUE, sep = ",", quote = "\"")
+        if(ncol(out) == 1) out <- read.table(input_file, header = TRUE, sep = "\t", quote = "\"")
+        if(ncol(out) == 1) {
+          sendSweetAlert(
+            width = "1000px",
+            session = session,
+            title = "Error...",
+            text = "We can only accept the following separators: ',', ';' and '\t'.",
+            type = "error"
+          )
+          
+          out <- NULL
+        }
+      }
     }
     
     return(out)
@@ -208,45 +208,94 @@ server <- function(input, output, session) {
   observe({
     out <- data_user()
     
-    names <- colnames(out)
-    shinyWidgets::updatePickerInput(session = session, inputId = "name_user", choices = names)
-    shinyWidgets::updatePickerInput(session = session, inputId = "date_user", choices = names)
-    shinyWidgets::updatePickerInput(session = session, inputId = "date_label_user", choices = names)
-    shinyWidgets::updatePickerInput(session = session, inputId = "count_user", choices = names)
-    shinyWidgets::updatePickerInput(session = session, inputId = "colour_user", choices = names)
+    if(!is.null(out)) {
+      names <- c("", colnames(out))
+      
+      shinymaterial::update_material_dropdown(session = session, input_id = "name_user", choices = names, value = names[1])
+      shinymaterial::update_material_dropdown(session = session, input_id = "date_user", choices = names, value = names[1])
+      shinymaterial::update_material_dropdown(session = session, input_id = "date_label_user", choices = names, value = names[1])
+      shinymaterial::update_material_dropdown(session = session, input_id = "count_user", choices = names, value = names[1])
+      shinymaterial::update_material_dropdown(session = session, input_id = "colour_user", choices = names, value = names[1]) 
+      
+      shinyjs::enable(id = "r2d3_user")
+    }
+  })
+  
+  observeEvent(input$r2d3_user_close, {
+    close_material_modal(session = session, modal_id = "upload_modal")
+  })
+  data_user_plot <- eventReactive(input$r2d3_user, {
+    data <- data_user()
+    
+    name <- input$name_user 
+    date <- input$date_user 
+    value <- input$count_user
+    
+    if(name == "" | date == "" | value == "") {
+      sendSweetAlert(
+        width = "1000px",
+        session = session,
+        title = "Error...",
+        text = "You must provide, at least, name, date and value columns.",
+        type = "error"
+      )
+      
+      file_out <- NULL
+    } else {
+      ##-- Close material
+      close_material_modal(session = session, modal_id = "upload_modal")
+      
+      ##-- Parameters
+      date_label <- ifelse(test = input$date_label_user == "", yes = input$date_user, no = input$date_label_user)
+      colour <- ifelse(test = input$colour_user == "", yes = input$name_user, no = input$colour_user)
+      
+      cumulative_user <- ifelse(test = input$cumulative_user %in% c("", "No"), yes = FALSE, no = TRUE)
+      
+      title <- input$title_user
+      subtitle <- input$subtitle_user
+      caption <- input$caption_user
+      
+      mood <- ifelse(is.null(input$mood_user), "neutral", tolower(input$mood_user))
+      duration <- ifelse(is.null(input$duration_user), 500, input$duration_user)
+      top_n <- ifelse(is.null(input$top_n), 12, input$top_n)
+      
+      gd3 <- barchartrace_r2d3(
+        data = data, 
+        name = name, date = date, value = value, date_label = date_label, colour = colour, 
+        cumulative = cumulative_user, 
+        title = title, 
+        subtitle = subtitle, 
+        caption = caption, 
+        mood = mood, top_n = top_n, duration = duration, 
+        css = "www/styles.css", script = "www/js/barchartrace.js", 
+        width = width, height = height
+      )
+      
+      file_out <- "www/out_bcr/barchartrace.html"
+      saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
+    }
+    
+    return(file_out)
   })
   output$user <- renderUI({
-    ##-- Inputs
-    duration <- input$duration_user
-    top_n <- input$top_n_user
+    file_out <- data_user_plot()
     
-    ##-- Prepare R2D3
-    frame_labels <- data_pop %>% 
-      group_by(frame) %>%
-      summarise(frame_label = first(frame_label)) %>%
-      .$frame_label
-    
-    options <- list(title = "The most populous cities", 
-                    subtitle = "3500 BC - 2000 AC", 
-                    caption = "Source: Nasa Earth Data’s Historical Urban Population",
-                    first_frame = 1, last_frame = max(data_pop$frame), 
-                    top_n = top_n, tick_duration = duration,
-                    height = 600, width = 960,
-                    margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
-                    frame_labels = frame_labels)
-    
-    gd3 <- r2d3(data = data_pop, 
-                css = "www/styles.css", 
-                script = "www/js/barchartrace.js", 
-                width = width, 
-                height = height, 
-                options = options)
-    
-    file_out <- "www/out_bcr/brands.html"
-    saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
-    
-    tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
+    if(!is.null(file_out)) {
+      ##-- file
+      file_out <- gsub(x = file_out, pattern = "www/", replacement = "")
+      
+      ##-- Plot
+      tags$iframe(src = file_out, height = "600", width = "100%", frameBorder = "0")
+    }
   })
+  output$user_download <- downloadHandler(
+    filename = function() {
+      "barchartrace.html"
+    },
+    content = function(con) {
+      file.copy(from = "www/out_bcr/barchartrace.html", con)
+    }
+  )
   
   ##-- Songs
   observeEvent(input$mood_corona, {
