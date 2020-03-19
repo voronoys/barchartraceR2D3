@@ -60,7 +60,7 @@ server <- function(input, output, session) {
     ##-- Prepare R2D3
     data_brands <- data_brands %>%
       mutate(frame_label = str_sub(string = year, start = 1, end = 4))
-
+    
     gd3 <- barchartrace_r2d3(
       data = data_brands, 
       name = "name", date = "year", value = "value", date_label = "frame_label", colour = "name", 
@@ -185,59 +185,64 @@ server <- function(input, output, session) {
   observeEvent(input$r2d3_user_close, {
     close_material_modal(session = session, modal_id = "upload_modal")
   })
-  data_user_plot <- eventReactive(input$r2d3_user, {
-    data <- data_user()
-    
-    name <- input$name_user 
-    date <- input$date_user 
-    value <- input$count_user
-    
-    if(name == "" | date == "" | value == "") {
-      sendSweetAlert(
-        width = "1000px",
-        session = session,
-        title = "Error...",
-        text = "You must provide, at least, name, date and value columns.",
-        type = "error"
-      )
-      
-      file_out <- NULL
-    } else {
-      ##-- Close material
-      close_material_modal(session = session, modal_id = "upload_modal")
-      
-      ##-- Parameters
-      date_label <- ifelse(test = input$date_label_user == "", yes = input$date_user, no = input$date_label_user)
-      colour <- ifelse(test = input$colour_user == "", yes = input$name_user, no = input$colour_user)
-      
-      cumulative_user <- ifelse(test = input$cumulative_user %in% c("", "No"), yes = FALSE, no = TRUE)
-      
-      title <- input$title_user
-      subtitle <- input$subtitle_user
-      caption <- input$caption_user
-      
-      mood <- ifelse(is.null(input$mood_user), "neutral", tolower(input$mood_user))
-      duration <- ifelse(is.null(input$duration_user), 500, input$duration_user)
-      top_n <- ifelse(is.null(input$top_n), 12, input$top_n)
-      
-      gd3 <- barchartrace_r2d3(
-        data = data, 
-        name = name, date = date, value = value, date_label = date_label, colour = colour, 
-        cumulative = cumulative_user, 
-        title = title, 
-        subtitle = subtitle, 
-        caption = caption, 
-        mood = mood, top_n = top_n, duration = duration, 
-        css = "www/styles.css", script = "www/js/barchartrace.js", 
-        width = width, height = height
-      )
-      
-      file_out <- "www/out_bcr/barchartrace.html"
-      saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
-    }
-    
-    return(file_out)
-  })
+  data_user_plot <- eventReactive(
+    c(input$r2d3_user, 
+      input$mood_user, 
+      input$duration_user, 
+      input$duration_user), {
+        ##-- Get data
+        data <- data_user()
+        
+        name <- input$name_user 
+        date <- input$date_user 
+        value <- input$count_user
+        
+        if(name == "" | date == "" | value == "") {
+          sendSweetAlert(
+            width = "1000px",
+            session = session,
+            title = "Error...",
+            text = "You must provide, at least, name, date and value columns.",
+            type = "error"
+          )
+          
+          file_out <- NULL
+        } else {
+          ##-- Close material
+          close_material_modal(session = session, modal_id = "upload_modal")
+          
+          ##-- Parameters
+          date_label <- ifelse(test = input$date_label_user == "", yes = input$date_user, no = input$date_label_user)
+          colour <- ifelse(test = input$colour_user == "", yes = input$name_user, no = input$colour_user)
+          
+          cumulative_user <- ifelse(test = input$cumulative_user %in% c("", "No"), yes = FALSE, no = TRUE)
+          
+          title <- input$title_user
+          subtitle <- input$subtitle_user
+          caption <- input$caption_user
+          
+          mood <- ifelse(is.null(input$mood_user), "neutral", tolower(input$mood_user))
+          duration <- ifelse(is.null(input$duration_user), 500, input$duration_user)
+          top_n <- ifelse(is.null(input$top_n_user), 12, input$top_n_user)
+          
+          gd3 <- barchartrace_r2d3(
+            data = data, 
+            name = name, date = date, value = value, date_label = date_label, colour = colour, 
+            cumulative = cumulative_user, 
+            title = title, 
+            subtitle = subtitle, 
+            caption = caption, 
+            mood = mood, top_n = top_n, duration = duration, 
+            css = "www/styles.css", script = "www/js/barchartrace.js", 
+            width = width, height = height
+          )
+          
+          file_out <- "www/out_bcr/barchartrace.html"
+          saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
+        }
+        
+        return(file_out)
+      })
   output$user <- renderUI({
     file_out <- data_user_plot()
     
@@ -286,6 +291,14 @@ server <- function(input, output, session) {
   observeEvent(input$mood_pop, {
     output$audio <- renderUI({
       mood <- tolower(input$mood_pop)
+      HTML(sprintf("<div align = 'right'; style = 'padding:5px; vertical-align:middle'>
+                      <audio controls controlsList = 'nodownload'><source src='mp3/%s.mp3' type='audio/mp3'></audio>
+                    </div>", mood))
+    })
+  })
+  observeEvent(input$mood_user, {
+    output$audio <- renderUI({
+      mood <- tolower(input$mood_user)
       HTML(sprintf("<div align = 'right'; style = 'padding:5px; vertical-align:middle'>
                       <audio controls controlsList = 'nodownload'><source src='mp3/%s.mp3' type='audio/mp3'></audio>
                     </div>", mood))
