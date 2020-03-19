@@ -1,3 +1,41 @@
+##-- Barchart race in D3
+barchartrace_r2d3 <- function(data, 
+                              name, date, value, date_label = date, colour = name, 
+                              cumulative = FALSE, 
+                              title = "", subtitle = "", caption = "", 
+                              mood = "neutral", top_n = 12, duration = 700,
+                              css = "www/styles.css", script = "www/js/barchartrace.js",
+                              width = 515, height = "100%") {
+  ##-- Prepare data
+  data <- prepare_data(data = data, date = date, date_label = date_label, name = name, value = value, cumulative = cumulative, mood = mood)
+  
+  ##-- Frame labels
+  frame_labels <- data %>% 
+    group_by(frame) %>%
+    summarise(frame_label = first(frame_label)) %>%
+    .$frame_label %>%
+    as.character
+  
+  ##-- Options
+  options <- list(title = title, 
+                  subtitle = subtitle, 
+                  caption = caption,
+                  first_frame = 1, last_frame = max(data$frame), 
+                  top_n = top_n, tick_duration = duration,
+                  height = 600, width = 960,
+                  margin_top = 80, margin_right = 0, margin_bottom = 5, margin_left = 0,
+                  frame_labels = frame_labels)
+  
+  bcrr2d3 <- r2d3(data = data, 
+                  css = css, 
+                  script = script, 
+                  width = width, 
+                  height = height, 
+                  options = options)
+  
+  return(bcrr2d3)
+}
+
 ##-- Function to prepare data for r2d3
 prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE, mood = "neutral") {
   
@@ -40,7 +78,7 @@ prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE,
   data <- data %>%
     dplyr::mutate(last_value = if_else(is.na(last_value), 0, as.numeric(last_value))) %>%
     dplyr::arrange(date) %>%
-    dplyr::mutate(frame = as.numeric(as.factor(date)))
+    dplyr::mutate(frame = as.numeric(as.factor(as.character(date))))
   
   ##-- Colors
   data$colour <- make_palette(x = data$name, mood = mood)
