@@ -41,3 +41,6 @@ if(!file.exists(pkgs_file)) {
 height <- 515
 width <- "100%"
 col_spinner <- "#2196F3" 
+
+##-- Out path
+dir.create(path = "www/out_bcr", showWarnings = FALSE)
