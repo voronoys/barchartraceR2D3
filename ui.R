@@ -89,7 +89,7 @@ material_page(
                    
                    ##-- Facebook
                    tags$iframe(
-                     src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                     src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
                      width = "115",
                      height = "20",
                      scrolling = "no",
@@ -106,7 +106,7 @@ material_page(
                    ),
                    tags$script(
                      type = "IN/Share",
-                     `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                     `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
                    ),
           ),
           
@@ -183,7 +183,7 @@ material_page(
                    
                    ##-- Facebook
                    tags$iframe(
-                     src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                     src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
                      width = "115",
                      height = "20",
                      scrolling = "no",
@@ -200,7 +200,7 @@ material_page(
                    ),
                    tags$script(
                      type = "IN/Share",
-                     `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                     `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
                    ),
           ),
           
@@ -278,7 +278,7 @@ material_page(
                      
                      ##-- Facebook
                      tags$iframe(
-                       src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                       src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
                        width = "115",
                        height = "20",
                        scrolling = "no",
@@ -295,7 +295,7 @@ material_page(
                      ),
                      tags$script(
                        type = "IN/Share",
-                       `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                       `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
                      ),
             ),
             
@@ -497,7 +497,7 @@ material_page(
                                         
                                         ##-- Facebook
                                         tags$iframe(
-                                          src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/voronoys/&layout=button_count&size=small&width=148&height=20&appId",
+                                          src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
                                           width = "115",
                                           height = "20",
                                           scrolling = "no",
@@ -514,7 +514,7 @@ material_page(
                                         ),
                                         tags$script(
                                           type = "IN/Share",
-                                          `data-url` = "https://voronoys.shinyapps.io/voronoys"
+                                          `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
                                         ),
                                ),
                                ##-- Download HTML
