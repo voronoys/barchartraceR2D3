@@ -85,12 +85,11 @@ material_page(
           ##-- Social networks
           tags$div(style = "display: inline; vertical-align: top;",
                    ##-- Twitter
-                   tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw1", 
+                   tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
                           class = "twitter-share-button", 
                           `data-hashtags` = "#rstats #rstudio #shinycontest #covid19 #coronavirus", 
                           `data-show-count` = "true", 
-                          `data-text1` = "It's my barchart race!",
-                          id = "corona"),
+                          `data-text1` = "It's my barchart race!"),
                    tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
                    
                    ##-- Facebook
@@ -182,12 +181,11 @@ material_page(
           ##-- Social networks
           tags$div(style = "display: inline; vertical-align: top;",
                    ##-- Twitter
-                   tags$a(href = "https://twitter.com/share?ref_src=twsrc%5Etfw2", 
+                   tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
                           class = "twitter-share-button", 
                           `data-hashtags` = "#rstats #rstudio #shinycontest", 
                           `data-show-count` = "true", 
-                          `data-text1` = "It's my barchart race!",
-                          id = "brands"),
+                          `data-text1` = "It's my barchart race!"),
                    tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
                    
                    ##-- Facebook
@@ -280,12 +278,11 @@ material_page(
             ##-- Social networks
             tags$div(style = "display: inline; vertical-align: top;",
                      ##-- Twitter
-                     tags$a(href = "https://twitter.com/share?ref_src=twsrc%5Etfw3", 
+                     tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
                             class = "twitter-share-button", 
                             `data-hashtags` = "#rstats #rstudio #shinycontest", 
                             `data-show-count` = "true", 
-                            `data-text1` = "It's my barchart race!",
-                            id = "pkgs"),
+                            `data-text1` = "It's my barchart race!"),
                      tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
                      
                      ##-- Facebook
@@ -500,12 +497,11 @@ material_page(
                                ##-- Social networks
                                tags$div(style = "display: inline; vertical-align: top;",
                                         ##-- Twitter
-                                        tags$a(href = "https://twitter.com/share?ref_src=twsrc%5Etfw2", 
+                                        tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
                                                class = "twitter-share-button", 
                                                `data-hashtags` = "#rstats #rstudio #shinycontest", 
                                                `data-show-count` = "true", 
-                                               `data-text1` = "It's my barchart race!",
-                                               id = "brands"),
+                                               `data-text1` = "It's my barchart race!"),
                                         tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
                                         
                                         ##-- Facebook

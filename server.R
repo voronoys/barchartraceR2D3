@@ -100,15 +100,6 @@ server <- function(input, output, session) {
              day = day(date),
              frame_label = paste0(month, "/", day))
     
-    # data_pkgs <- data_pkgs %>%
-    #   mutate(month = month(date, abbr = TRUE, label = TRUE),
-    #          day = day(date),
-    #          week = week(date),
-    #          frame_label = paste0(month, "/", day)) %>%
-    #   group_by(week, package) %>%
-    #   summarise(frame_label = last(frame_label),
-    #             count = sum(count))
-    
     gd3 <- barchartrace_r2d3(
       data = data_pkgs, 
       name = "package", date = "date", value = "count", date_label = "frame_label", colour = "package", 
