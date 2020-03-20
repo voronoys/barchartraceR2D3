@@ -111,7 +111,7 @@ server <- function(input, output, session) {
     
     gd3 <- barchartrace_r2d3(
       data = data_pkgs, 
-      name = "package", date = "week", value = "count", date_label = "frame_label", colour = "package", 
+      name = "package", date = "date", value = "count", date_label = "frame_label", colour = "package", 
       cumulative = TRUE, 
       title = "Most downloaded R packages in 2019", 
       subtitle = "Based on the 100 most downloaded packages last month", 
