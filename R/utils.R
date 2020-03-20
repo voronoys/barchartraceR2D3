@@ -8,7 +8,8 @@ barchartrace_r2d3 <- function(data,
                               width = 515, height = "100%") {
   ##-- Prepare data
   data <- prepare_data(data = data, 
-                       date = date, date_label = date_label, name = name, value = value, colour = colour,
+                       date = date, date_label = date_label, 
+                       name = name, value = value, colour = colour,
                        cumulative = cumulative, 
                        mood = mood) %>%
     dplyr::filter(rank <= top_n)
@@ -41,12 +42,22 @@ barchartrace_r2d3 <- function(data,
 }
 
 ##-- Function to prepare data for r2d3
-prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE, mood = "neutral") {
+prepare_data <- function(data, 
+                         date, date_label,
+                         name, value, colour, 
+                         cumulative = TRUE, 
+                         mood = "neutral") {
   
   if(is.null(date_label)) date_label <- date
   if(date_label == date) {
     data[["frame_label"]] <- data[[date]]
     date_label <- "frame_label" 
+  }
+  
+  if(is.null(colour)) colour <- name
+  if(colour == name) {
+    data[["colour"]] <- data[[name]]
+    colour <- "colour" 
   }
   
   ##-- Renaming
