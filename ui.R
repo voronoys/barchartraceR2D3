@@ -2,9 +2,15 @@ material_page(
   title = "",
   include_nav_bar = FALSE,
   ##-- Including audio
-  tags$nav(htmlOutput("audio"), class = "blue"),
+  tags$nav(
+    htmlOutput("audio"), 
+    class = "blue"
+  ),
   ##-- Enabling shinyjs
   useShinyjs(),
+  ##-- Enabling rintrojs
+  introjsUI(),
+  ##-- Global CSS
   shiny::includeCSS("www/styles_global.css"),
   ##-- Sidebar
   material_side_nav(
@@ -12,7 +18,7 @@ material_page(
     image_source = "img/material.png",
     material_side_nav_tabs(
       side_nav_tabs = c(
-        "Corona virus race" = "cv_race",
+        "COVID-19 race" = "cv_race",
         "Brands race" = "b_race",
         "R packages race" = "pkgs_race",
         "Upload your own data" = "upload_data"
@@ -20,7 +26,7 @@ material_page(
       icons = c("ac_unit", "copyright", "build", "cloud_upload")
     )
   ),
-  ##-- COVID-19
+  ##-- COVID-19 ----
   material_side_nav_tab_content(
     side_nav_tab_id = "cv_race",
     tags$br(),
@@ -83,50 +89,52 @@ material_page(
           ),
           
           ##-- Social networks
-          tags$div(style = "display: inline; vertical-align: top;",
-                   ##-- Twitter
-                   tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
-                          class = "twitter-share-button", 
-                          `data-hashtags` = "#rstats #rstudio #shinycontest #covid19 #coronavirus", 
-                          `data-show-count` = "true", 
-                          `data-text1` = "It's my barchart race!"),
-                   tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
-                   
-                   ##-- Facebook
-                   tags$iframe(
-                     src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
-                     width = "115",
-                     height = "20",
-                     scrolling = "no",
-                     frameborder = "0",
-                     allowTransparency = "true",
-                     allow = "encrypted-media"
-                   ),
-                   
-                   ##-- LinkedIn
-                   tags$script(
-                     src = "https://platform.linkedin.com/in.js",
-                     type = "text/javascript",
-                     "lang: en_US"
-                   ),
-                   tags$script(
-                     type = "IN/Share",
-                     `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
-                   ),
-          ),
-          
-          ##-- Download HTML
-          downloadBttn(
-            outputId = "corona_download",
-            style = "bordered",
-            color = "primary",
-            size = "xs"
+          material_row(
+            tags$div(style = "display: inline; vertical-align: top;",
+                     ##-- Twitter
+                     tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
+                            class = "twitter-share-button", 
+                            `data-hashtags` = "#rstats #rstudio #shinycontest #covid19 #coronavirus", 
+                            `data-show-count` = "true", 
+                            `data-text1` = "It's my barchart race!"),
+                     tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
+                     
+                     ##-- Facebook
+                     tags$iframe(
+                       src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
+                       width = "115",
+                       height = "20",
+                       scrolling = "no",
+                       frameborder = "0",
+                       allowTransparency = "true",
+                       allow = "encrypted-media"
+                     ),
+                     
+                     ##-- LinkedIn
+                     tags$script(
+                       src = "https://platform.linkedin.com/in.js",
+                       type = "text/javascript",
+                       "lang: en_US"
+                     ),
+                     tags$script(
+                       type = "IN/Share",
+                       `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
+                     ),
+            ),
+            
+            ##-- Download HTML
+            downloadBttn(
+              outputId = "corona_download",
+              style = "bordered",
+              color = "primary",
+              size = "xs"
+            )
           )
         )
       )
     )
   ),
-  ##-- BRANDS
+  ##-- BRANDS ----
   material_side_nav_tab_content(
     side_nav_tab_id = "b_race",
     tags$br(),
@@ -179,50 +187,52 @@ material_page(
               color = col_spinner)
           ),
           ##-- Social networks
-          tags$div(style = "display: inline; vertical-align: top;",
-                   ##-- Twitter
-                   tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
-                          class = "twitter-share-button", 
-                          `data-hashtags` = "#rstats #rstudio #shinycontest", 
-                          `data-show-count` = "true", 
-                          `data-text1` = "It's my barchart race!"),
-                   tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
-                   
-                   ##-- Facebook
-                   tags$iframe(
-                     src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
-                     width = "115",
-                     height = "20",
-                     scrolling = "no",
-                     frameborder = "0",
-                     allowTransparency = "true",
-                     allow = "encrypted-media"
-                   ),
-                   
-                   ##-- LinkedIn
-                   tags$script(
-                     src = "https://platform.linkedin.com/in.js",
-                     type = "text/javascript",
-                     "lang: en_US"
-                   ),
-                   tags$script(
-                     type = "IN/Share",
-                     `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
-                   ),
-          ),
-          
-          ##-- Download HTML
-          downloadBttn(
-            outputId = "brands_download",
-            style = "bordered",
-            color = "primary",
-            size = "xs"
+          material_row(
+            tags$div(style = "display: inline; vertical-align: top;",
+                     ##-- Twitter
+                     tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
+                            class = "twitter-share-button", 
+                            `data-hashtags` = "#rstats #rstudio #shinycontest", 
+                            `data-show-count` = "true", 
+                            `data-text1` = "It's my barchart race!"),
+                     tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
+                     
+                     ##-- Facebook
+                     tags$iframe(
+                       src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
+                       width = "115",
+                       height = "20",
+                       scrolling = "no",
+                       frameborder = "0",
+                       allowTransparency = "true",
+                       allow = "encrypted-media"
+                     ),
+                     
+                     ##-- LinkedIn
+                     tags$script(
+                       src = "https://platform.linkedin.com/in.js",
+                       type = "text/javascript",
+                       "lang: en_US"
+                     ),
+                     tags$script(
+                       type = "IN/Share",
+                       `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
+                     ),
+            ),
+            
+            ##-- Download HTML
+            downloadBttn(
+              outputId = "brands_download",
+              style = "bordered",
+              color = "primary",
+              size = "xs"
+            )
           )
         )
       )
     )
   ),
-  ##-- R packages
+  ##-- R packages ----
   material_side_nav_tab_content(
     side_nav_tab_id = "pkgs_race",
     tags$br(),
@@ -264,18 +274,18 @@ material_page(
             )
           )
         ),
-        material_row(
+        material_card(
+          title = "", 
+          width = 12,
           material_card(
-            title = "", 
-            width = 12,
-            material_card(
-              title = "",
-              shinycssloaders::withSpinner(
-                htmlOutput(outputId = "pkgs", height = '515px'), 
-                type = 4,
-                color = col_spinner) 
-            ),
-            ##-- Social networks
+            title = "",
+            shinycssloaders::withSpinner(
+              htmlOutput(outputId = "pkgs", height = '515px'), 
+              type = 4,
+              color = col_spinner) 
+          ),
+          ##-- Social networks
+          material_row(
             tags$div(style = "display: inline; vertical-align: top;",
                      ##-- Twitter
                      tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
@@ -320,7 +330,7 @@ material_page(
       )
     )
   ),
-  ##-- USER
+  ##-- USER ----
   material_side_nav_tab_content(
     side_nav_tab_id = "upload_data",
     tags$br(),
@@ -495,56 +505,58 @@ material_page(
                                  )
                                ),
                                ##-- Social networks
-                               tags$div(style = "display: inline; vertical-align: top;",
-                                        ##-- Twitter
-                                        tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
-                                               class = "twitter-share-button", 
-                                               `data-hashtags` = "#rstats #rstudio #shinycontest", 
-                                               `data-show-count` = "true", 
-                                               `data-text1` = "It's my barchart race!"),
-                                        tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
-                                        
-                                        ##-- Facebook
-                                        tags$iframe(
-                                          src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
-                                          width = "115",
-                                          height = "20",
-                                          scrolling = "no",
-                                          frameborder = "0",
-                                          allowTransparency = "true",
-                                          allow = "encrypted-media"
-                                        ),
-                                        
-                                        ##-- LinkedIn
-                                        tags$script(
-                                          src = "https://platform.linkedin.com/in.js",
-                                          type = "text/javascript",
-                                          "lang: en_US"
-                                        ),
-                                        tags$script(
-                                          type = "IN/Share",
-                                          `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
-                                        ),
-                               ),
-                               ##-- Download HTML
-                               downloadBttn(
-                                 outputId = "user_download",
-                                 style = "bordered",
-                                 color = "primary",
-                                 size = "xs"
+                               material_row(
+                                 tags$div(style = "display: inline; vertical-align: top;",
+                                          ##-- Twitter
+                                          tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw", 
+                                                 class = "twitter-share-button", 
+                                                 `data-hashtags` = "#rstats #rstudio #shinycontest", 
+                                                 `data-show-count` = "true", 
+                                                 `data-text1` = "It's my barchart race!"),
+                                          tags$script(`async src` = "https://platform.twitter.com/widgets.js", charset = "utf-8"),
+                                          
+                                          ##-- Facebook
+                                          tags$iframe(
+                                            src = "https://www.facebook.com/plugins/share_button.php?href=https://voronoys.shinyapps.io/barchartraceR2D3/&layout=button_count&size=small&width=148&height=20&appId",
+                                            width = "115",
+                                            height = "20",
+                                            scrolling = "no",
+                                            frameborder = "0",
+                                            allowTransparency = "true",
+                                            allow = "encrypted-media"
+                                          ),
+                                          
+                                          ##-- LinkedIn
+                                          tags$script(
+                                            src = "https://platform.linkedin.com/in.js",
+                                            type = "text/javascript",
+                                            "lang: en_US"
+                                          ),
+                                          tags$script(
+                                            type = "IN/Share",
+                                            `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
+                                          ),
+                                 ),
+                                 ##-- Download HTML
+                                 downloadBttn(
+                                   outputId = "user_download",
+                                   style = "bordered",
+                                   color = "primary",
+                                   size = "xs"
+                                 )
                                )
                              )
             ),
             conditionalPanel(condition = "!input.r2d3_user",
                              material_card(
-                               title = HTML("<h2 style='color:#4e847f;'>Instructions</h2>"),
-                               HTML("<h4 style='color:#80cbc4;'>
+                               title = "",
+                               HTML("<h3 style='color:#80cbc4;'>
                                        Select your data set using the
                                        <button data-target='upload_modal' display='inline-block' class='waves-effect waves-light shiny-material-modal-trigger modal-trigger teal lighten-3 btn-floating btn-large waves-effect waves-light z-depth-3' style='background-color:#F06C71;'>
                                          <i class='material-icons left'>cloud_upload</i>
                                        </button>
                                        button!
-                                     </h4>
+                                     </h3>
                                      <p style='color:#63636399;'>
                                        It must contains at least 3 columns:
                                      </p>

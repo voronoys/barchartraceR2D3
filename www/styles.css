@@ -48,3 +48,7 @@ path.domain{
 body {
   padding: 0;
 }
+
+/*svg:not(:root) {
+  overflow: visible;
+}*/

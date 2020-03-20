@@ -1,5 +1,38 @@
 server <- function(input, output, session) {
   runjs("$('#dataset_user').parent().removeClass('btn-default').addClass('btn-danger');")
+  introjs(session = session, 
+          options = list(steps =
+                           data.frame(
+                             element = c("#body", 
+                                         "#slide-out",
+                                         "#cv_race_tab_id",
+                                         "#cv_race > div > div > div.row > div:nth-child(1)",
+                                         "#cv_race > div > div > div.row > div:nth-child(2)",
+                                         "#duration_corona",
+                                         "#top_n_corona",
+                                         "#corona",
+                                         "#cv_race > div > div > div.card > div > div.row",
+                                         "#b_race_tab_id",
+                                         "#pkgs_race_tab_id"
+                                         ),
+                             intro = c("Before start looking the races let's have a tour in our app!", 
+                                       "We have three examples of barchart races at the sidebar...",
+                                       "The COVID-19 barchart race shows the number of cases/deaths/recovered by country.",
+                                       "Here can select the outcome: confirmed cases, deaths or recovered",
+                                       "The mood: neutral, sad or happy...",
+                                       "The duration speed. The higher the duration the lower the transition.",
+                                       "The number of bars to be displayed.",
+                                       "Finally you have the barchart race displayed in the middle of the screen.",
+                                       "Share it on your Twitter, Facebook or LinkedIn!",
+                                       "The brands barchart race shows the brand's value by brand.",
+                                       "The R packages race shows the most downloaded packages in 2019 based on the last top 100 most downloaded packages."
+                             ),
+                             position = c("auto", "top", "auto", "auto", "auto", "auto", "auto", "auto", "auto", "auto", "auto")
+                           ),
+                         nextLabel = "Next",
+                         prevLabel = "Previous",
+                         skipLabel = "Skip",
+                         doneLabel = "Done"))
   
   ##-- COVID-19 bar chart race
   output$corona <- renderUI({
@@ -36,7 +69,7 @@ server <- function(input, output, session) {
       width = width, height = height
     )
     
-    file_out <- "www/out_bcr/corona.html"
+    file_out <- "www/out_bcr/covid19.html"
     saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
     
     tags$iframe(src = paste0("out_bcr/", basename(file_out)), height = "600", width = "100%", frameBorder = "0")
@@ -46,7 +79,7 @@ server <- function(input, output, session) {
       sprintf("covid19_%s.html", Sys.Date())
     },
     content = function(con) {
-      file.copy(from = "www/out_bcr/corona.html", con)
+      file.copy(from = "www/out_bcr/covid19.html", con)
     }
   )
   
@@ -185,64 +218,60 @@ server <- function(input, output, session) {
   observeEvent(input$r2d3_user_close, {
     close_material_modal(session = session, modal_id = "upload_modal")
   })
-  data_user_plot <- eventReactive(
-    c(input$r2d3_user, 
-      input$mood_user, 
-      input$duration_user, 
-      input$duration_user), {
-        ##-- Get data
-        data <- data_user()
-        
-        name <- input$name_user 
-        date <- input$date_user 
-        value <- input$count_user
-        
-        if(name == "" | date == "" | value == "") {
-          sendSweetAlert(
-            width = "1000px",
-            session = session,
-            title = "Error...",
-            text = "You must provide, at least, name, date and value columns.",
-            type = "error"
-          )
-          
-          file_out <- NULL
-        } else {
-          ##-- Close material
-          close_material_modal(session = session, modal_id = "upload_modal")
-          
-          ##-- Parameters
-          date_label <- ifelse(test = input$date_label_user == "", yes = input$date_user, no = input$date_label_user)
-          colour <- ifelse(test = input$colour_user == "", yes = input$name_user, no = input$colour_user)
-          
-          cumulative_user <- ifelse(test = input$cumulative_user %in% c("", "No"), yes = FALSE, no = TRUE)
-          
-          title <- input$title_user
-          subtitle <- input$subtitle_user
-          caption <- input$caption_user
-          
-          mood <- ifelse(is.null(input$mood_user), "neutral", tolower(input$mood_user))
-          duration <- ifelse(is.null(input$duration_user), 500, input$duration_user)
-          top_n <- ifelse(is.null(input$top_n_user), 12, input$top_n_user)
-          
-          gd3 <- barchartrace_r2d3(
-            data = data, 
-            name = name, date = date, value = value, date_label = date_label, colour = colour, 
-            cumulative = cumulative_user, 
-            title = title, 
-            subtitle = subtitle, 
-            caption = caption, 
-            mood = mood, top_n = top_n, duration = duration, 
-            css = "www/styles.css", script = "www/js/barchartrace.js", 
-            width = width, height = height
-          )
-          
-          file_out <- "www/out_bcr/barchartrace.html"
-          saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
-        }
-        
-        return(file_out)
-      })
+  data_user_plot <- eventReactive(c(input$r2d3_user, input$mood_user, input$duration_user, input$duration_user), {
+    ##-- Get data
+    data <- data_user()
+    
+    name <- input$name_user 
+    date <- input$date_user 
+    value <- input$count_user
+    
+    if(name == "" | date == "" | value == "") {
+      sendSweetAlert(
+        width = "1000px",
+        session = session,
+        title = "Error...",
+        text = "You must provide, at least, name, date and value columns.",
+        type = "error"
+      )
+      
+      file_out <- NULL
+    } else {
+      ##-- Close material
+      close_material_modal(session = session, modal_id = "upload_modal")
+      
+      ##-- Parameters
+      date_label <- ifelse(test = input$date_label_user == "", yes = input$date_user, no = input$date_label_user)
+      colour <- ifelse(test = input$colour_user == "", yes = input$name_user, no = input$colour_user)
+      
+      cumulative_user <- ifelse(test = input$cumulative_user %in% c("", "No"), yes = FALSE, no = TRUE)
+      
+      title <- input$title_user
+      subtitle <- input$subtitle_user
+      caption <- input$caption_user
+      
+      mood <- ifelse(is.null(input$mood_user), "neutral", tolower(input$mood_user))
+      duration <- ifelse(is.null(input$duration_user), 500, input$duration_user)
+      top_n <- ifelse(is.null(input$top_n_user), 12, input$top_n_user)
+      
+      gd3 <- barchartrace_r2d3(
+        data = data, 
+        name = name, date = date, value = value, date_label = date_label, colour = colour, 
+        cumulative = cumulative_user, 
+        title = title, 
+        subtitle = subtitle, 
+        caption = caption, 
+        mood = mood, top_n = top_n, duration = duration, 
+        css = "www/styles.css", script = "www/js/barchartrace.js", 
+        width = width, height = height
+      )
+      
+      file_out <- "www/out_bcr/barchartrace.html"
+      saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
+    }
+    
+    return(file_out)
+  })
   output$user <- renderUI({
     file_out <- data_user_plot()
     
@@ -268,7 +297,7 @@ server <- function(input, output, session) {
     output$audio <- renderUI({
       mood <- tolower(input$mood_corona)
       HTML(sprintf("<div align = 'right'; style = 'padding:5px; vertical-align:middle'>
-                      <audio controls controlsList = 'autoplay; nodownload'><source src='mp3/%s.mp3' type='audio/mp3'></audio>
+                      <div id='audioid'><<audio controls controlsList = 'autoplay; nodownload'><source src='mp3/%s.mp3' type='audio/mp3'></audio></div>
                     </div>", mood))
     })
   })
@@ -283,14 +312,6 @@ server <- function(input, output, session) {
   observeEvent(input$mood_pkgs, {
     output$audio <- renderUI({
       mood <- tolower(input$mood_pkgs)
-      HTML(sprintf("<div align = 'right'; style = 'padding:5px; vertical-align:middle'>
-                      <audio controls controlsList = 'nodownload'><source src='mp3/%s.mp3' type='audio/mp3'></audio>
-                    </div>", mood))
-    })
-  })
-  observeEvent(input$mood_pop, {
-    output$audio <- renderUI({
-      mood <- tolower(input$mood_pop)
       HTML(sprintf("<div align = 'right'; style = 'padding:5px; vertical-align:middle'>
                       <audio controls controlsList = 'nodownload'><source src='mp3/%s.mp3' type='audio/mp3'></audio>
                     </div>", mood))
