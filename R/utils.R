@@ -7,7 +7,11 @@ barchartrace_r2d3 <- function(data,
                               css = "www/styles.css", script = "www/js/barchartrace.js",
                               width = 515, height = "100%") {
   ##-- Prepare data
-  data <- prepare_data(data = data, date = date, date_label = date_label, name = name, value = value, cumulative = cumulative, mood = mood)
+  data <- prepare_data(data = data, 
+                       date = date, date_label = date_label, name = name, value = value, colour = colour,
+                       cumulative = cumulative, 
+                       mood = mood) %>%
+    dplyr::filter(rank <= top_n)
   
   ##-- Frame labels
   frame_labels <- data %>% 
@@ -50,13 +54,14 @@ prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE,
     rename(date = rlang::expr(!!date),
            frame_label = rlang::expr(!!date_label),
            name = rlang::expr(!!name),
-           value = rlang::expr(!!value))
+           value = rlang::expr(!!value),
+           colour = rlang::expr(!!colour))
   
   ##-- Ranks
   if(cumulative) {
     data <- data %>%
-      dplyr::arrange(date) %>%
       dplyr::group_by(name) %>%
+      dplyr::arrange(date) %>%
       dplyr::mutate(value = cumsum(value)) %>%
       dplyr::ungroup() 
   }
@@ -78,10 +83,10 @@ prepare_data <- function(data, date, date_label, name, value, cumulative = TRUE,
   data <- data %>%
     dplyr::mutate(last_value = if_else(is.na(last_value), 0, as.numeric(last_value))) %>%
     dplyr::arrange(date) %>%
-    dplyr::mutate(frame = as.numeric(as.factor(as.character(date))))
+    dplyr::mutate(frame = as.numeric(as.factor(date)))
   
   ##-- Colors
-  data$colour <- make_palette(x = data$name, mood = mood)
+  data$colour <- make_palette(x = data$colour, mood = mood)
   
   ##-- Select
   data <- data %>%
