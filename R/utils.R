@@ -61,6 +61,12 @@ prepare_data <- function(data,
   }
   
   ##-- Renaming
+  if("name" %in% names(data) & name != "name") data$name <- NULL
+  if("date" %in% names(data) & date != "date") data$date <- NULL
+  if("date_label" %in% names(data) & date_label != "date_label") data$date_label <- NULL
+  if("value" %in% names(data) & value != "value") data$value <- NULL
+  if("colour" %in% names(data) & colour != "colour") data$colour <- NULL
+  
   data <- data %>%
     rename(date = rlang::expr(!!date),
            frame_label = rlang::expr(!!date_label),
