@@ -96,13 +96,22 @@ server <- function(input, output, session) {
     
     ##-- Prepare R2D3
     data_pkgs <- data_pkgs %>%
-      mutate(month = month(date, abbr = TRUE, label = TRUE), 
+      mutate(month = month(date, abbr = TRUE, label = TRUE),
              day = day(date),
              frame_label = paste0(month, "/", day))
     
+    # data_pkgs <- data_pkgs %>%
+    #   mutate(month = month(date, abbr = TRUE, label = TRUE),
+    #          day = day(date),
+    #          week = week(date),
+    #          frame_label = paste0(month, "/", day)) %>%
+    #   group_by(week, package) %>%
+    #   summarise(frame_label = last(frame_label),
+    #             count = sum(count))
+    
     gd3 <- barchartrace_r2d3(
       data = data_pkgs, 
-      name = "package", date = "date", value = "count", date_label = "frame_label", colour = "package", 
+      name = "package", date = "week", value = "count", date_label = "frame_label", colour = "package", 
       cumulative = TRUE, 
       title = "Most downloaded R packages in 2019", 
       subtitle = "Based on the 100 most downloaded packages last month", 
@@ -172,11 +181,11 @@ server <- function(input, output, session) {
     if(!is.null(out)) {
       names <- c("", colnames(out))
       
-      shinymaterial::update_material_dropdown(session = session, input_id = "name_user", choices = names, value = names[1])
-      shinymaterial::update_material_dropdown(session = session, input_id = "date_user", choices = names, value = names[1])
-      shinymaterial::update_material_dropdown(session = session, input_id = "date_label_user", choices = names, value = names[1])
-      shinymaterial::update_material_dropdown(session = session, input_id = "count_user", choices = names, value = names[1])
-      shinymaterial::update_material_dropdown(session = session, input_id = "colour_user", choices = names, value = names[1]) 
+      update_material_dropdown(session = session, input_id = "name_user", choices = names, value = names[1])
+      update_material_dropdown(session = session, input_id = "date_user", choices = names, value = names[1])
+      update_material_dropdown(session = session, input_id = "date_label_user", choices = names, value = names[1])
+      update_material_dropdown(session = session, input_id = "count_user", choices = names, value = names[1])
+      update_material_dropdown(session = session, input_id = "colour_user", choices = names, value = names[1]) 
       
       shinyjs::enable(id = "r2d3_user")
     }

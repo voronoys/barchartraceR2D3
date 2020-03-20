@@ -1,7 +1,9 @@
 material_page(
   title = "",
   include_nav_bar = FALSE,
+  ##-- Including audio
   tags$nav(htmlOutput("audio"), class = "blue"),
+  ##-- Enabling shinyjs
   useShinyjs(),
   shiny::includeCSS("www/styles_global.css"),
   ##-- Sidebar
@@ -73,7 +75,11 @@ material_page(
           title = "", 
           material_card(
             title = "",
-            shinycssloaders::withSpinner(htmlOutput(outputId = "corona", height = '515px'), type = 4, color = col_spinner),
+            shinycssloaders::withSpinner(
+              htmlOutput(outputId = "corona", height = '515px'), 
+              type = 4, 
+              color = col_spinner
+            ),
           ),
           
           ##-- Social networks
@@ -168,7 +174,10 @@ material_page(
           width = 12,
           material_card(
             title = "",
-            shinycssloaders::withSpinner(htmlOutput(outputId = "brands", height = '515px'), type = 4, color = col_spinner)
+            shinycssloaders::withSpinner(
+              htmlOutput(outputId = "brands", height = '515px'),
+              type = 4, 
+              color = col_spinner)
           ),
           ##-- Social networks
           tags$div(style = "display: inline; vertical-align: top;",
@@ -263,7 +272,10 @@ material_page(
             width = 12,
             material_card(
               title = "",
-              shinycssloaders::withSpinner(htmlOutput(outputId = "pkgs", height = '515px'), type = 4, color = col_spinner) 
+              shinycssloaders::withSpinner(
+                htmlOutput(outputId = "pkgs", height = '515px'), 
+                type = 4,
+                color = col_spinner) 
             ),
             ##-- Social networks
             tags$div(style = "display: inline; vertical-align: top;",
@@ -482,7 +494,8 @@ material_page(
                                  shinycssloaders::withSpinner(
                                    htmlOutput(outputId = "user", height = '515px'), 
                                    type = 4, 
-                                   color = col_spinner)
+                                   color = col_spinner
+                                 )
                                ),
                                ##-- Social networks
                                tags$div(style = "display: inline; vertical-align: top;",
