@@ -544,5 +544,9 @@ material_page(
         )
       )
     )
+  ),
+  ##-- Footer ----
+  div(class = "footer",
+      div(includeHTML("html/google_analytics.html"))
   )
 )
