@@ -97,7 +97,7 @@ prepare_data <- function(data,
     dplyr::mutate(frame = as.numeric(factor(date)))
   
   ##-- Colors
-  data$colour <- make_palette(x = data$colour, mood = mood)
+  if(!is.color(data$colour[1])) data$colour <- make_palette(x = data$colour, mood = mood)
   
   ##-- Select
   data <- data %>%
@@ -180,4 +180,10 @@ make_palette <- function(x, mood = "neutral") {
   
   out_colors <- palette[x]
   return(out_colors)
+}
+
+is.color <- function(x) {
+  lg <- grepl(x = x, pattern = "^#([0-9]|[a-eA-E]){6}")  
+  
+  return(lg)
 }
