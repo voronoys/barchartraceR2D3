@@ -2,5 +2,6 @@
 .Rproj.user
 google_analytics.html
 rsconnect/
-R/
+R/r2d3_example.R
+R/ggplot2/
 conexao_shiny_io.R
