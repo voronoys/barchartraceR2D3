@@ -94,7 +94,7 @@ prepare_data <- function(data,
   data <- data %>%
     dplyr::mutate(last_value = if_else(is.na(last_value), 0, as.numeric(last_value))) %>%
     dplyr::arrange(date) %>%
-    dplyr::mutate(frame = as.numeric(as.factor(date)))
+    dplyr::mutate(frame = as.numeric(factor(date)))
   
   ##-- Colors
   data$colour <- make_palette(x = data$colour, mood = mood)
