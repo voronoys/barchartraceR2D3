@@ -147,9 +147,9 @@ server <- function(input, output, session) {
         
         out <- NULL
       } else {
-        out <- read.table(input_file, header = TRUE, sep = ";", quote = "\"")
-        if(ncol(out) == 1) out <- read.table(input_file, header = TRUE, sep = ",", quote = "\"")
-        if(ncol(out) == 1) out <- read.table(input_file, header = TRUE, sep = "\t", quote = "\"")
+        out <- read.table(input_file, header = TRUE, sep = ";", quote = "\"", comment.char = "")
+        if(ncol(out) == 1) out <- read.table(input_file, header = TRUE, sep = ",", quote = "\"", comment.char = "")
+        if(ncol(out) == 1) out <- read.table(input_file, header = TRUE, sep = "\t", quote = "\"", comment.char = "")
         if(ncol(out) == 1) {
           sendSweetAlert(
             width = "1000px",
