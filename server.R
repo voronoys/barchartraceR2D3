@@ -3,42 +3,33 @@ server <- function(input, output, session) {
   introjs(session = session, 
           options = list(steps =
                            data.frame(
-                             element = c("#body", 
+                             element = c(NA, 
                                          "#slide-out",
-                                         # "#cv_race_tab_id",
                                          "#cv_race > div > div > div.row > div:nth-child(1)",
                                          "#cv_race > div > div > div.row > div:nth-child(2)",
                                          "#duration_corona",
                                          "#top_n_corona",
                                          "#corona",
-                                         "#cv_race > div > div > div.card > div > div.row"#,
-                                         # "#b_race_tab_id > a",
-                                         # "#pkgs_race_tab_id > a"
-                                         ),
+                                         "#corona_download_bttn"
+                             ),
                              intro = c("Before start looking the races let's have a tour in our app!", 
                                        "We have three examples of barchart races at the sidebar: COVID-19, brands value and most downloaded R packages. Also it is possible to upload your own dataset.",
-                                       # "The COVID-19 barchart race shows the number of cases/deaths/recovered by country.",
                                        "For COVID-19 you can select the outcome: confirmed cases, deaths or recovered",
                                        "The mood: neutral, sad or happy...",
                                        "The duration speed. The higher the duration the lower the transition.",
                                        "The number of bars to be displayed.",
                                        "Finally you have the barchart race displayed in the middle of the screen.",
-                                       "Share it on your Twitter, Facebook or LinkedIn!"#,
-                                       # "The brands barchart race shows the brand's value by brand.",
-                                       # "The R packages race shows the most downloaded packages in 2019 based on the last top 100 most downloaded packages."
+                                       "Download it in HTML format!"
                              ),
                              position = c("auto", 
                                           "top",
-                                          # "auto",
                                           "auto",
                                           "auto", 
                                           "auto", 
                                           "auto",
                                           "auto",
-                                          "auto"#,
-                                          # "auto", 
-                                          # "auto"
-                                          )
+                                          "auto"
+                             )
                            ),
                          nextLabel = "Next",
                          prevLabel = "Previous",
