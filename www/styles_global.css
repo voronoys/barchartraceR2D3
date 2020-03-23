@@ -39,3 +39,11 @@
 a {
   color: #fff;
 }
+
+.swal2-popup .swal2-content {
+  font-size: 0.95em;
+}
+
+.dropdown-content {
+  height: 300px;
+}
