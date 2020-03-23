@@ -27,7 +27,6 @@ material_page(
       ),
       icons = c("ac_unit", "copyright", "build", "cloud_upload")
     ),
-    hr(),
     br(), 
     tags$div(style = "display:inherit; padding-top:3%; text-align:center;",
              tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw",
@@ -60,7 +59,6 @@ material_page(
              )
     ),
     br(),
-    hr(),
     
     ##-- GitHub
     tags$a(
@@ -336,7 +334,7 @@ material_page(
               floating_button = TRUE, 
               close_button_label = NULL,
               title = "Upload your data",
-              span('The data set must have at least three columns: date, name and count.'),
+              span('The dataset must have at least three columns: date, name and count.'),
               br(), br(), 
               material_column(
                 width = 12,
