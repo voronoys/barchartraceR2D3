@@ -88,14 +88,14 @@ prepare_data <- function(data,
     dplyr::arrange(dplyr::desc(value)) %>%
     dplyr::mutate(rank = 1:n()) %>%
     dplyr::ungroup()
-
+  
   ##-- Last value
   data <- data %>%
     dplyr::arrange(date) %>%
     dplyr::group_by(name) %>%
     dplyr::mutate(last_value = dplyr::lag(x = value, n = 1L)) %>%
     dplyr::ungroup()
-
+  
   ##-- Frame and frame label
   data <- data %>%
     dplyr::mutate(last_value = if_else(is.na(last_value), 0, as.numeric(last_value))) %>%
@@ -145,7 +145,7 @@ get_corona_data <- function() {
     dplyr::mutate(date = gsub(pattern = "X", replacement = "", x = date)) %>% 
     dplyr::mutate(date = gsub(pattern = "\\.", replacement = "/", x = date)) %>% 
     dplyr::mutate(date = as.Date(date, format = "%m/%d/%y"))
-
+  
   return(data)
 }
 
