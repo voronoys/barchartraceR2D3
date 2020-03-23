@@ -30,7 +30,7 @@ server <- function(input, output, session) {
                          prevLabel = "Previous",
                          skipLabel = "Skip",
                          doneLabel = "Done")
-          )
+  )
   
   ##-- COVID-19 bar chart race
   output$corona <- renderUI({
@@ -62,7 +62,7 @@ server <- function(input, output, session) {
       data = data_corona, 
       name = "name", date = "date", value = "value", date_label = "date", colour = "name", 
       cumulative = FALSE, 
-      title = "Covid-19 outside China", 
+      title = "COVID-19 outside China", 
       subtitle = subtitle, 
       caption = "Source: John Hopkins University", 
       mood = mood, top_n = top_n, duration = duration, 
@@ -261,7 +261,7 @@ server <- function(input, output, session) {
       data[[date]] <- parse_date_time(x = data[[date]], orders = c("ymd", "dmy", "ydm", "ym", "md"))
       err01 <- any(is.na(data[[date]]))
     }
-     
+    
     if(err01) {
       sendSweetAlert(
         width = "1000px",
@@ -304,7 +304,7 @@ server <- function(input, output, session) {
       
       return(NULL)
     }
-      
+    
     ##-- Close material
     close_material_modal(session = session, modal_id = "upload_modal")
     
