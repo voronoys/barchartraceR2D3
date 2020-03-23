@@ -9,41 +9,38 @@ server <- function(input, output, session) {
                                          "#cv_race > div > div > div.row > div:nth-child(2)",
                                          "#duration_corona",
                                          "#top_n_corona",
+                                         "#rebuild_corona",
                                          "#corona",
                                          "#corona_download_bttn"
                              ),
-                             intro = c("Before start looking the races let's have a tour in our app!", 
-                                       "We have three examples of barchart races at the sidebar: COVID-19, brands value and most downloaded R packages. Also it is possible to upload your own dataset.",
+                             intro = c("Before start looking at the races let's have a tour in our app!", 
+                                       "We provide three examples of bar chart races at the sidebar: COVID-19, brand value, and most downloaded R packages. Also, it is possible to upload your dataset.",
                                        "For COVID-19 you can select the outcome: confirmed cases, deaths or recovered",
                                        "The mood: neutral, sad or happy...",
-                                       "The duration speed. The higher the duration the lower the transition.",
+                                       "The duration speed. The higher the duration the slower the transition.",
                                        "The number of bars to be displayed.",
-                                       "Finally you have the barchart race displayed in the middle of the screen.",
+                                       "Rebuild the plot after changing the controls.",
+                                       "Finally, you have the bar chart race displayed in the middle of the screen.",
                                        "Download it in HTML format!"
-                             ),
-                             position = c("auto", 
-                                          "top",
-                                          "auto",
-                                          "auto", 
-                                          "auto", 
-                                          "auto",
-                                          "auto",
-                                          "auto"
                              )
                            ),
                          nextLabel = "Next",
                          prevLabel = "Previous",
                          skipLabel = "Skip",
-                         doneLabel = "Done"))
+                         doneLabel = "Done")
+          )
   
   ##-- COVID-19 bar chart race
   output$corona <- renderUI({
     ##-- Inputs
-    duration <- input$duration_corona
-    top_n <- input$top_n_corona
-    mood <- tolower(input$mood_corona)
+    input$rebuild_corona
     
-    type_sel <- switch(input$type_corona,
+    duration <- isolate(input$duration_corona)
+    top_n <- isolate(input$top_n_corona)
+    mood <- isolate(tolower(input$mood_corona))
+    type <- isolate(input$type_corona)
+    
+    type_sel <- switch(type,
                        "Confirmed cases" = "Confirmed",
                        "Deaths" = "Deaths",
                        "Recovered" = "Recovered")
@@ -88,9 +85,10 @@ server <- function(input, output, session) {
   ##-- Brands bar chart race
   output$brands <- renderUI({
     ##-- Inputs
-    duration <- input$duration_brands
-    top_n <- input$top_n_brands
-    mood <- tolower(input$mood_brands)
+    input$rebuild_brands
+    duration <- isolate(input$duration_brands)
+    top_n <- isolate(input$top_n_brands)
+    mood <- isolate(tolower(input$mood_brands))
     
     ##-- Prepare R2D3
     data_brands <- data_brands %>%
@@ -125,9 +123,10 @@ server <- function(input, output, session) {
   ##-- R packages bar chart race
   output$pkgs <- renderUI({
     ##-- Inputs
-    duration <- input$duration_pkgs
-    top_n <- input$top_n_pkgs
-    mood <- tolower(input$mood_pkgs)
+    input$rebuild_pkgs
+    duration <- isolate(input$duration_pkgs)
+    top_n <- isolate(input$top_n_pkgs)
+    mood <- isolate(tolower(input$mood_pkgs))
     
     ##-- Prepare R2D3
     data_pkgs <- data_pkgs %>%
@@ -220,7 +219,7 @@ server <- function(input, output, session) {
   observeEvent(input$r2d3_user_close, {
     close_material_modal(session = session, modal_id = "upload_modal")
   })
-  data_user_plot <- eventReactive(c(input$r2d3_user, input$mood_user, input$duration_user, input$duration_user), {
+  data_user_plot <- eventReactive(input$rebuild_user, {
     ##-- Get data
     data <- data_user()
     
@@ -228,7 +227,7 @@ server <- function(input, output, session) {
     date <- input$date_user 
     value <- input$count_user
     
-    if(name == "" | date == "" | value == "") {
+    if(name == "" || date == "" || value == "") {
       sendSweetAlert(
         width = "1000px",
         session = session,
