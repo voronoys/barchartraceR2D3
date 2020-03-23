@@ -86,6 +86,7 @@ server <- function(input, output, session) {
   output$brands <- renderUI({
     ##-- Inputs
     input$rebuild_brands
+    
     duration <- isolate(input$duration_brands)
     top_n <- isolate(input$top_n_brands)
     mood <- isolate(tolower(input$mood_brands))
@@ -124,6 +125,7 @@ server <- function(input, output, session) {
   output$pkgs <- renderUI({
     ##-- Inputs
     input$rebuild_pkgs
+    
     duration <- isolate(input$duration_pkgs)
     top_n <- isolate(input$top_n_pkgs)
     mood <- isolate(tolower(input$mood_pkgs))
@@ -181,9 +183,18 @@ server <- function(input, output, session) {
         
         out <- NULL
       } else {
-        out <- read.table(input_file, header = TRUE, sep = ";", quote = "\"", comment.char = "")
-        if(ncol(out) == 1) out <- read.table(input_file, header = TRUE, sep = ",", quote = "\"", comment.char = "")
-        if(ncol(out) == 1) out <- read.table(input_file, header = TRUE, sep = "\t", quote = "\"", comment.char = "")
+        ##-- Tryig sep = ","
+        out <- read.table(input_file, header = TRUE, sep = ";", quote = "\"", comment.char = "", stringsAsFactors = FALSE)
+        
+        ##-- Tryig sep = ";"
+        if(ncol(out) == 1) 
+          out <- read.table(input_file, header = TRUE, sep = ",", quote = "\"", comment.char = "", stringsAsFactors = FALSE)
+        
+        ##-- Tryig sep = "\t"
+        if(ncol(out) == 1) 
+          out <- read.table(input_file, header = TRUE, sep = "\t", quote = "\"", comment.char = "", stringsAsFactors = FALSE)
+        
+        ##-- 
         if(ncol(out) == 1) {
           sendSweetAlert(
             width = "1000px",
@@ -194,7 +205,7 @@ server <- function(input, output, session) {
           )
           
           out <- NULL
-        }
+        } 
       }
     }
     
@@ -219,7 +230,7 @@ server <- function(input, output, session) {
   observeEvent(input$r2d3_user_close, {
     close_material_modal(session = session, modal_id = "upload_modal")
   })
-  data_user_plot <- eventReactive(input$rebuild_user, {
+  data_user_plot <- eventReactive(c(input$r2d3_user, input$rebuild_user), {
     ##-- Get data
     data <- data_user()
     
@@ -227,6 +238,7 @@ server <- function(input, output, session) {
     date <- input$date_user 
     value <- input$count_user
     
+    ##-- Checking empty columns
     if(name == "" || date == "" || value == "") {
       sendSweetAlert(
         width = "1000px",
@@ -236,40 +248,92 @@ server <- function(input, output, session) {
         type = "error"
       )
       
-      file_out <- NULL
-    } else {
-      ##-- Close material
-      close_material_modal(session = session, modal_id = "upload_modal")
-      
-      ##-- Parameters
-      date_label <- ifelse(test = input$date_label_user == "", yes = input$date_user, no = input$date_label_user)
-      colour <- ifelse(test = input$colour_user == "", yes = input$name_user, no = input$colour_user)
-      
-      cumulative_user <- ifelse(test = input$cumulative_user %in% c("", "No"), yes = FALSE, no = TRUE)
-      
-      title <- input$title_user
-      subtitle <- input$subtitle_user
-      caption <- input$caption_user
-      
-      mood <- ifelse(is.null(input$mood_user), "neutral", tolower(input$mood_user))
-      duration <- ifelse(is.null(input$duration_user), 500, input$duration_user)
-      top_n <- ifelse(is.null(input$top_n_user), 12, input$top_n_user)
-      
-      gd3 <- barchartrace_r2d3(
-        data = data, 
-        name = name, date = date, value = value, date_label = date_label, colour = colour, 
-        cumulative = cumulative_user, 
-        title = title, 
-        subtitle = subtitle, 
-        caption = caption, 
-        mood = mood, top_n = top_n, duration = duration, 
-        css = "www/styles.css", script = "www/js/barchartrace.js", 
-        width = width, height = height
+      return(NULL)
+    } 
+    
+    ##-- Checking problems
+    ##-- + Date class
+    err01 <- !(class(data[[date]]) %in% c("integer", "numeric"))
+    
+    if(err01) {
+      data[[date]] <- parse_date_time(x = data[[date]], orders = c("ymd", "dmy", "ydm", "ym", "md"))
+      err01 <- any(is.na(data[[date]]))
+    }
+     
+    if(err01) {
+      sendSweetAlert(
+        width = "1000px",
+        session = session,
+        title = "Error...",
+        text = "Date must be in a date format (e.g. YYYY/mm/dd or dd-mm-YYYY) or at least be a numeric vector",
+        type = "error"
       )
       
-      file_out <- "www/out_bcr/barchartrace.html"
-      saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
+      return(NULL)
     }
+    ##-- Value class
+    err02 <- !(class(data[[value]]) %in% c("integer", "numeric"))
+    
+    if(err01) {
+      sendSweetAlert(
+        width = "1000px",
+        session = session,
+        title = "Error...",
+        text = "Value must be in an integer or a numeric vector",
+        type = "error"
+      )
+      
+      return(NULL)
+    }
+    
+    ##-- Repeated names by date class
+    test_n <- data %>%
+      group_by_(name, date) %>%
+      summarise(n = n())
+    
+    if(any(test_n$n > 1)) {
+      sendSweetAlert(
+        width = "1000px",
+        session = session,
+        title = "Error...",
+        text = sprintf("There is more than one entry for a combination of %s and %s.", name, date),
+        type = "error"
+      )
+      
+      return(NULL)
+    }
+      
+    ##-- Close material
+    close_material_modal(session = session, modal_id = "upload_modal")
+    
+    ##-- Parameters
+    date_label <- ifelse(test = input$date_label_user == "", yes = input$date_user, no = input$date_label_user)
+    colour <- ifelse(test = input$colour_user == "", yes = input$name_user, no = input$colour_user)
+    
+    cumulative_user <- ifelse(test = input$cumulative_user %in% c("", "No"), yes = FALSE, no = TRUE)
+    
+    title <- input$title_user
+    subtitle <- input$subtitle_user
+    caption <- input$caption_user
+    
+    mood <- ifelse(is.null(input$mood_user), "neutral", tolower(input$mood_user))
+    duration <- ifelse(is.null(input$duration_user), 500, input$duration_user)
+    top_n <- ifelse(is.null(input$top_n_user), 12, input$top_n_user)
+    
+    gd3 <- barchartrace_r2d3(
+      data = data, 
+      name = name, date = date, value = value, date_label = date_label, colour = colour, 
+      cumulative = cumulative_user, 
+      title = title, 
+      subtitle = subtitle, 
+      caption = caption, 
+      mood = mood, top_n = top_n, duration = duration, 
+      css = "www/styles.css", script = "www/js/barchartrace.js", 
+      width = width, height = height
+    )
+    
+    file_out <- "www/out_bcr/barchartrace.html"
+    saveWidgetFix(widget = gd3, file = file_out, selfcontained = TRUE)
     
     return(file_out)
   })

@@ -27,7 +27,7 @@ material_page(
     ),
     hr(),
     br(), 
-    tags$div(style = "display:inherit; vertical-align: top; text-align:center;",
+    tags$div(style = "display:inherit; padding-top:3%; text-align:center;",
              tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw",
                     class = "twitter-share-button",
                     `data-hashtags` = "#rstats #rstudio #shinycontest #covid19 #coronavirus",
@@ -57,6 +57,7 @@ material_page(
                `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3/"
              )
     ),
+    br(),
     hr()
   ),
   ##-- COVID-19 ----
@@ -115,7 +116,7 @@ material_page(
               input_id = "rebuild_corona",
               label = "Rebuild",
               icon = "autorenew", 
-              color =  "blue"
+              color =  "teal lighten-3"
             )
           )
         ),
@@ -187,7 +188,7 @@ material_page(
               input_id = "rebuild_brands",
               label = "Rebuild",
               icon = "autorenew", 
-              color =  "blue"
+              color =  "teal lighten-3"
             )
           )
         ),
@@ -259,7 +260,7 @@ material_page(
               input_id = "rebuild_pkgs",
               label = "Rebuild",
               icon = "autorenew", 
-              color =  "blue"
+              color =  "teal lighten-3"
             )
           )
         ),
@@ -453,7 +454,7 @@ material_page(
                                    input_id = "rebuild_user",
                                    label = "Rebuild",
                                    icon = "autorenew", 
-                                   color =  "blue"
+                                   color =  "teal lighten-3"
                                  )
                                )
                              ),
@@ -487,16 +488,16 @@ material_page(
                                        button!
                                      </h3>
                                      <p style='color:#63636399;'>
-                                       It must contains at least 3 columns:
+                                       It must contain at least 3 columns:
                                      </p>
                                      <ul style='color:#63636399;'>
                                        <li>A column indicating the <b>group or name</b> of each bar. </li>
-                                       <li>A <b>date column</b> or at leats a numerical one. </li>
+                                       <li>A <b>date column</b> or at least a numerical one. </li>
                                        <li>The <b>value</b> to be displayed. </li>
                                      </ul>
                                      <p style='color:#63636399;'>
-                                       It is still possible to define the <b>frame label</b> and the <b>bar colors</b> columns. If the colors are not present then a random set of colors are going to be used based on the mood.
-                                       Do not forget to inform if the values must be added over time (cumulative = Yes) or not!
+                                       It is still possible to define the <b>frame label</b> and the <b>bar color</b> columns. If the colors are not present then a random set of colors is going to be used based on the mood.
+                                       Do not forget to inform me whether the values must be accumulated over time (cumulative = Yes) or not!
                                      </p>
                                      <p style='color:#63636399;'>
                                        After uploading the data you will be able to select the <b>number of bars</b> to be displayed, the <b>transition speed</b> and the <b>mood</b>.
