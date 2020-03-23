@@ -12,6 +12,8 @@ material_page(
   introjsUI(),
   ##-- Global CSS
   shiny::includeCSS("www/styles_global.css"),
+  ##-- Github button
+  HTML("<script async defer src='https://buttons.github.io/buttons.js'></script>"),
   ##-- Sidebar
   material_side_nav(
     fixed = TRUE, 
@@ -33,7 +35,7 @@ material_page(
                     `data-hashtags` = "#rstats #rstudio #shinycontest #covid19 #coronavirus",
                     `data-show-count` = "true",
                     `data-url` = "https://voronoys.shinyapps.io/barchartraceR2D3",
-                    `data-text1` = "It's my barchart race!"),
+                    `data-text1` = "Look at this bar chart race!"),
              
              ##-- Facebook
              tags$iframe(
@@ -58,7 +60,15 @@ material_page(
              )
     ),
     br(),
-    hr()
+    hr(),
+    
+    ##-- GitHub
+    tags$a(
+      href = "https://github.com/voronoys/barchartraceR2D3",
+      tags$i(
+        class = "fa fa-github", style = 'font-size:30px; color: black; display: list-item; padding-left: 10px; position: fixed; bottom: 70px;'
+      )
+    )
   ),
   ##-- COVID-19 ----
   material_side_nav_tab_content(
@@ -136,6 +146,13 @@ material_page(
             style = "bordered",
             color = "primary",
             size = "xs"
+          ),
+          HTML("<a class='github-button'
+                   href='https://github.com/voronoys/barchartraceR2D3/archive/master.zip' 
+                   data-color-scheme='no-preference: light; light: light; dark: dark;' 
+                   aria-label='Download voronoys/barchartraceR2D3 on GitHub'>
+                   Download
+                </a>"
           )
         )
       )
@@ -208,6 +225,13 @@ material_page(
             style = "bordered",
             color = "primary",
             size = "xs"
+          ),
+          HTML("<a class='github-button' 
+                   href='https://github.com/voronoys/barchartraceR2D3/archive/master.zip' 
+                   data-color-scheme='no-preference: light; light: light; dark: dark;' 
+                   aria-label='Download voronoys/barchartraceR2D3 on GitHub'>
+                   Download
+                </a>"
           )
         )
       )
@@ -280,6 +304,13 @@ material_page(
             style = "bordered",
             color = "primary",
             size = "xs"
+          ),
+          HTML("<a class='github-button' 
+                   href='https://github.com/voronoys/barchartraceR2D3/archive/master.zip' 
+                   data-color-scheme='no-preference: light; light: light; dark: dark;' 
+                   aria-label='Download voronoys/barchartraceR2D3 on GitHub'>
+                   Download
+                </a>"
           )
         )
       )
@@ -474,6 +505,13 @@ material_page(
                                  style = "bordered",
                                  color = "primary",
                                  size = "xs"
+                               ),
+                               HTML("<a class='github-button' 
+                                        href='https://github.com/voronoys/barchartraceR2D3/archive/master.zip' 
+                                        data-color-scheme='no-preference: light; light: light; dark: dark;' 
+                                        aria-label='Download voronoys/barchartraceR2D3 on GitHub'>
+                                        Download
+                                     </a>"
                                )
                              )
             ),
