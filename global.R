@@ -2,6 +2,8 @@
 library(dplyr)
 library(tidyr)
 library(stringr)
+library(lubridate)
+library(cranlogs)
 library(shiny)
 library(shinymaterial)
 library(shinycssloaders)
@@ -10,13 +12,10 @@ library(shinyBS)
 library(shinyjs)
 library(rintrojs)
 library(r2d3)
-library(cranlogs)
-library(lubridate)
 
 source(file = "R/utils.R")
 
 ##-- Data corona
-corona_file <- sprintf("data/corona_%s.csv", Sys.Date())
 data_corona <- get_corona_data()
 
 ##-- Data brands
