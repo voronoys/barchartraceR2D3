@@ -170,7 +170,9 @@ saveWidgetFix <- function (widget, file, ...) {
   htmlwidgets::saveWidget(widget, file = file, ...)
 }
 
-make_palette <- function(x, mood = "neutral") {
+make_palette <- function(x, mood = "neutral", seed = 1) {
+  set.seed(seed)
+  
   x <- as.character(x)
   unique_groups <- unique(x)
   
