@@ -2,16 +2,6 @@
 ////// Thanks to Joel Zief: https://bl.ocks.org/jrzief/70f1f8a5d066a286da3a1e699823470f //////
 ////////////////////////////////////////////////////////////////////////////////////// ///////
 
-// Cleaning plot
-svg.selectAll("g").remove();
-svg.selectAll(".bar").remove();
-svg.selectAll(".title").remove();
-svg.selectAll(".subtitle").remove();
-svg.selectAll(".label").remove();
-svg.selectAll(".caption").remove();
-svg.selectAll(".value_label").remove();
-svg.selectAll(".frame_text").remove();
-  
 // Functions
 const halo = function(text, strokeWidth) {
   text.select(function() { return this.parentNode.insertBefore(this.cloneNode(true), this); })
@@ -68,7 +58,6 @@ data.forEach(d => {
   d.value = isNaN(d.value) ? 0 : d.value,
   d.frame = +d.frame,
   d.colour = d3.hsl(d.colour);
-  //d.colour = d3.hsl(Math.random()*360,0.75,0.75);
 });
   
 let frame_slice = data.filter(d => d.frame == frame && !isNaN(d.value))
