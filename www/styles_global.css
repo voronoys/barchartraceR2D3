@@ -19,7 +19,7 @@
   color: #1d89ff;
   background-color: #2196f3;
   color: white;
-  vertical-align: super;
+  vertical-align: top;
 }
 
 .bttn-bordered.bttn-xs {
@@ -45,5 +45,5 @@ a {
 }
 
 .dropdown-content {
-  height: 300px;
+  max-height: 300px;
 }
