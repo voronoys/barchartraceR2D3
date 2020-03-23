@@ -11,7 +11,7 @@ providing a function to execute it from inside R.
   - Live version: [barchartraceR2D3 - Live
     app](https://voronoys.shinyapps.io/barchartraceR2D3/)
   - RStudio cloud: [barchartraceR2D3 - RStudio
-    cloud](https://rstudio.cloud/project/1061261)
+    cloud](https://rstudio.cloud/project/1061658)
   - GitHub: [barchartraceR2D3 -
     Github](https://github.com/voronoys/barchartraceR2D3)
 
