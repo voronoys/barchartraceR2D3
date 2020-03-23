@@ -6,3 +6,4 @@ R/r2d3_example.R
 R/ggplot2/
 www/out_bcr/*
 conexao_shiny_io.R
+README.Rmd
