@@ -100,7 +100,7 @@ material_page(
             width = 2,
             material_slider(
               input_id = "duration_corona",
-              label = "Transition duration (milliseconds)",
+              label = "Duration (ms)",
               min_value = 0,
               max_value = 1000,
               initial_value = 700,
@@ -179,7 +179,7 @@ material_page(
             width = 2,
             material_slider(
               input_id = "duration_brands",
-              label = "Transition duration (milliseconds)",
+              label = "Duration (ms)",
               min_value = 0,
               max_value = 1000,
               initial_value = 500,
@@ -258,7 +258,7 @@ material_page(
             width = 2,
             material_slider(
               input_id = "duration_pkgs",
-              label = "Transition duration (milliseconds)",
+              label = "Duration (ms)",
               min_value = 0,
               max_value = 1000,
               initial_value = 250,
@@ -459,7 +459,7 @@ material_page(
                                  width = 2,
                                  material_slider(
                                    input_id = "duration_user",
-                                   label = "Transition duration (milliseconds)",
+                                   label = "Duration (ms)",
                                    min_value = 0,
                                    max_value = 1000,
                                    initial_value = 700,
