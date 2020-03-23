@@ -11,7 +11,8 @@ server <- function(input, output, session) {
                                          "#top_n_corona",
                                          "#rebuild_corona",
                                          "#corona",
-                                         "#corona_download_bttn"
+                                         "#corona_download_bttn",
+                                         "#cv_race > div > div > div.card > div > span:nth-child(5)"
                              ),
                              intro = c("Before start looking at the races let's have a tour in our app!", 
                                        "We provide three examples of bar chart races at the sidebar: COVID-19, brand value, and most downloaded R packages. Also, it is possible to upload your dataset.",
@@ -21,7 +22,8 @@ server <- function(input, output, session) {
                                        "The number of bars to be displayed.",
                                        "Rebuild the plot after changing the controls.",
                                        "Finally, you have the bar chart race displayed in the middle of the screen.",
-                                       "Download it in HTML format!"
+                                       "Download it in HTML format!",
+                                       "Download the app from GitHub!"
                              )
                            ),
                          nextLabel = "Next",
@@ -362,7 +364,7 @@ server <- function(input, output, session) {
     output$audio <- renderUI({
       mood <- tolower(input$mood_corona)
       HTML(sprintf("<div align = 'right'; style = 'padding:5px; vertical-align:middle'>
-                      <div id='audioid'><<audio controls controlsList = 'autoplay; nodownload'><source src='mp3/%s.mp3' type='audio/mp3'></audio></div>
+                      <div id='audioid'><<audio controls controlsList = 'autoplay loop; nodownload'><source src='mp3/%s.mp3' type='audio/mp3'></audio></div>
                     </div>", mood))
     })
   })
