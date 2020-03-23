@@ -19,8 +19,8 @@ providing a function to execute it from inside R.
 
 The bar chart race is an awesome visualization tool that provides the
 evolution of a numerical variable along the time by groups. It is
-possible to observe how several groups evolve and the competition
-between groups.
+possible to observe how several groups evolve and the competition among
+them.
 
 There are several tools available to create bar chart race. However,
 there is no standard tool to create such kind of plot in R. Therefore,
