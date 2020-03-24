@@ -48,7 +48,7 @@ COVID-19 (coronavirus).
 
 It is a very common example of bar char races. The data is provided by
 [Interbrand](https://www.interbrand.com/best-brands/) and presents the
-market value of several Brands around the world showing its evolution
+brand value for several brands around the world showing its evolution
 over time.
 
 ![](www/img/brands.png)
