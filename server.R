@@ -18,7 +18,7 @@ server <- function(input, output, session) {
                              ),
                              intro = c("Before start looking at the races let's have a tour in our app!", 
                                        "We provide three examples of bar chart races at the sidebar: COVID-19, brand value, and most downloaded R packages. Also, it is possible to upload your dataset.",
-                                       "For COVID-19 you can select the outcome: confirmed cases, deaths or recovered",
+                                       "For COVID-19 you can select the outcome: confirmed cases or deaths.",
                                        "The mood: neutral, sad or happy...",
                                        "The duration speed. The higher the duration the slower the transition.",
                                        "The number of bars to be displayed.",
@@ -45,9 +45,8 @@ server <- function(input, output, session) {
     type <- isolate(input$type_corona)
     
     type_sel <- switch(type,
-                       "Confirmed cases" = "Confirmed",
-                       "Deaths" = "Deaths",
-                       "Recovered" = "Recovered")
+                       "Confirmed cases" = "confirmed",
+                       "Deaths" = "deaths")
     
     ##-- Prepare data
     data_corona <- data_corona %>%
@@ -56,9 +55,8 @@ server <- function(input, output, session) {
     
     ##-- Prepare R2D3
     subtitle <- switch(type_sel,
-                       "Confirmed" = "Confirmed cases (cumulative)",
-                       "Deaths" = "Number of deaths (cumulative)",
-                       "Recovered" = "Number of recovered (cumulative)")
+                       "confirmed" = "Confirmed cases (cumulative)",
+                       "deaths" = "Number of deaths (cumulative)")
     
     gd3 <- barchartrace_r2d3(
       data = data_corona, 

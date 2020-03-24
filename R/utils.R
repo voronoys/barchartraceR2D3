@@ -116,11 +116,11 @@ prepare_data <- function(data,
 ##-- COVID-19 dataset
 get_corona_data <- function() {
   ##-- Reading
-  types <- c("Confirmed", "Deaths", "Recovered")
+  types <- c("confirmed", "deaths")
   
   data <- dplyr::bind_rows(
     lapply(types, function(type) {
-      link <- sprintf("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-%s.csv", type)
+      link <- sprintf("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_%s_global.csv", type)
       read.csv(link, stringsAsFactors = FALSE) %>% 
         mutate(type = type)
     })

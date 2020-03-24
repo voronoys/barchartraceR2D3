@@ -84,7 +84,7 @@ material_page(
             material_dropdown(
               input_id = "type_corona",
               label = "Variable", 
-              choices = c("Confirmed cases", "Deaths", "Recovered"),
+              choices = c("Confirmed cases", "Deaths"),
               color = "blue"
             )
           ),

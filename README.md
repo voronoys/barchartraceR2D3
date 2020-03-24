@@ -38,8 +38,8 @@ for a selected mood, helping to create an atmosphere.
 
 ## COVID-19 bar chart race
 
-The bar chart race is based on the daily counts of new cases, deaths and
-recovered individuals provided by the [Johns Hopkins
+The bar chart race is based on the daily counts of new cases and deaths
+provided by the [Johns Hopkins
 University](https://github.com/CSSEGISandData/COVID-19) for the new
 COVID-19 (coronavirus).
 
