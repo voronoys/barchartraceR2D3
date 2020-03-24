@@ -195,3 +195,36 @@ is.color <- function(x) {
   
   return(lg)
 }
+
+material_floating_button2 <- function(input_id, icon = NULL, depth = NULL, color = NULL, top = FALSE) {
+  shinymaterial:::create_material_object(
+    js_file = "shiny-material-floating-button.js", 
+    material_tag_list = shiny::tagList(
+      shiny::tags$div(
+        id = paste0(input_id, "_div"),
+        class = "fixed-action-btn", 
+        style = ifelse(top, 
+                       "bottom: auto;", 
+                       ""),
+        shiny::tags$button(
+          class = paste0("btn-floating btn-large waves-effect waves-light shiny-material-floating-button", 
+                         ifelse(
+                           is.null(depth), 
+                           "", 
+                           paste0(" z-depth-", depth)
+                         ), 
+                         ifelse(
+                           is.null(color), 
+                           "", 
+                           paste0(" ", color)
+                         )
+          ), 
+          style = ifelse(!is.null(color), "", "background-color:#F06C71"), 
+          id = input_id, 
+          value = 0, 
+          shiny::tags$i(class = "material-icons", icon)
+        )
+      )
+    )
+  )
+}

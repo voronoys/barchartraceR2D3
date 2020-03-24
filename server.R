@@ -11,7 +11,7 @@ server <- function(input, output, session) {
                                          "#cv_race > div > div > div.row > div:nth-child(2)",
                                          "#duration_corona",
                                          "#top_n_corona",
-                                         "#rebuild_corona",
+                                         "#rebuild_corona_div",
                                          "#corona",
                                          "#corona_download_bttn",
                                          "#cv_race > div > div > div.card > div > span:nth-child(5)"

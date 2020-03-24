@@ -80,7 +80,7 @@ material_page(
         offset = 1,
         material_row(
           material_column(
-            width = 2,
+            width = 3,
             material_dropdown(
               input_id = "type_corona",
               label = "Variable", 
@@ -89,7 +89,7 @@ material_page(
             )
           ),
           material_column(
-            width = 2,
+            width = 3,
             material_dropdown(
               input_id = "mood_corona",
               label = "Theme mood", 
@@ -99,7 +99,7 @@ material_page(
             )
           ),
           material_column(
-            width = 2,
+            width = 3,
             material_slider(
               input_id = "duration_corona",
               label = "Duration (ms)",
@@ -110,25 +110,17 @@ material_page(
             )
           ),
           material_column(
-            width = 2,
+            width = 3,
             material_slider(
               input_id = "top_n_corona",
-              label = "Number of bars",
+              label = "# Bars",
               min_value = 2,
               max_value = 15,
               initial_value = 10,
               color = "blue"
             )
           ),
-          material_column(
-            width = 2, offset = 2,
-            material_button(
-              input_id = "rebuild_corona",
-              label = "Rebuild",
-              icon = "autorenew", 
-              color =  "teal lighten-3"
-            )
-          )
+          material_floating_button2(input_id = "rebuild_corona", icon = "autorenew", color = "teal lighten-3", top = TRUE)
         ),
         material_card(
           title = "", 
@@ -170,7 +162,7 @@ material_page(
         offset = 1,
         material_row(
           material_column(
-            width = 2,
+            width = 3,
             material_dropdown(
               input_id = "mood_brands",
               label = "Theme mood", 
@@ -180,7 +172,7 @@ material_page(
             )
           ),
           material_column(
-            width = 2,
+            width = 3,
             material_slider(
               input_id = "duration_brands",
               label = "Duration (ms)",
@@ -191,25 +183,17 @@ material_page(
             )
           ),
           material_column(
-            width = 2,
+            width = 3,
             material_slider(
               input_id = "top_n_brands",
-              label = "Number of bars",
+              label = "# Bars",
               min_value = 2,
               max_value = 15,
               initial_value = 10,
               color = "blue"
             )
           ),
-          material_column(
-            width = 2, offset = 4,
-            material_button(
-              input_id = "rebuild_brands",
-              label = "Rebuild",
-              icon = "autorenew", 
-              color =  "teal lighten-3"
-            )
-          )
+          material_floating_button2(input_id = "rebuild_brands", icon = "autorenew", color = "teal lighten-3", top = TRUE)
         ),
         material_card(
           title = "",
@@ -251,7 +235,7 @@ material_page(
         offset = 1,
         material_row(
           material_column(
-            width = 2,
+            width = 3,
             material_dropdown(
               input_id = "mood_pkgs",
               label = "Theme mood", 
@@ -261,7 +245,7 @@ material_page(
             )
           ),
           material_column(
-            width = 2,
+            width = 3,
             material_slider(
               input_id = "duration_pkgs",
               label = "Duration (ms)",
@@ -272,25 +256,17 @@ material_page(
             )
           ),
           material_column(
-            width = 2,
+            width = 3,
             material_slider(
               input_id = "top_n_pkgs",
-              label = "Number of bars",
+              label = "# Bars",
               min_value = 2,
               max_value = 15,
               initial_value = 10,
               color = "blue"
             )
           ),
-          material_column(
-            width = 2, offset = 4,
-            material_button(
-              input_id = "rebuild_pkgs",
-              label = "Rebuild",
-              icon = "autorenew", 
-              color =  "teal lighten-3"
-            )
-          )
+          material_floating_button2(input_id = "rebuild_pkgs", icon = "autorenew", color = "teal lighten-3", top = TRUE)
         ),
         material_card(
           title = "", 
@@ -454,7 +430,7 @@ material_page(
             conditionalPanel(condition = "input.r2d3_user",
                              material_row(
                                material_column(
-                                 width = 2,
+                                 width = 3,
                                  material_dropdown(
                                    input_id = "mood_user",
                                    label = "Theme mood", 
@@ -464,7 +440,7 @@ material_page(
                                  )
                                ),
                                material_column(
-                                 width = 2,
+                                 width = 3,
                                  material_slider(
                                    input_id = "duration_user",
                                    label = "Duration (ms)",
@@ -475,25 +451,17 @@ material_page(
                                  )
                                ),
                                material_column(
-                                 width = 2,
+                                 width = 3,
                                  material_slider(
                                    input_id = "top_n_user",
-                                   label = "Number of bars",
+                                   label = "# Bars",
                                    min_value = 2,
                                    max_value = 15,
                                    initial_value = 10,
                                    color = "blue"
                                  )
                                ),
-                               material_column(
-                                 width = 2, offset = 4,
-                                 material_button(
-                                   input_id = "rebuild_user",
-                                   label = "Rebuild",
-                                   icon = "autorenew", 
-                                   color =  "teal lighten-3"
-                                 )
-                               )
+                               material_floating_button2(input_id = "rebuild_user", icon = "autorenew", color = "teal lighten-3", top = TRUE)
                              ),
                              material_card(
                                title = "",

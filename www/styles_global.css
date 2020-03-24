@@ -1,3 +1,4 @@
+/* Widgets */
 .IN-widget {
     display: inline-block;
     line-height: 1;
@@ -14,6 +15,7 @@
     padding-left: 3px;
 }
 
+/* Buttons */
 .bttn-bordered.bttn-primary {
   border-color: rgba(29,137,255,.4);
   color: #1d89ff;
@@ -28,22 +30,26 @@
     height: 20px;
 }
 
+/* Modal */
 #upload_modal {
   height: 600px;
 }
 
+/* Dropdown */
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
   color: white;
 }
 
+.dropdown-content {
+  max-height: 300px;
+}
+
+/* Links */
 a {
   color: #fff;
 }
 
+/* Messages */
 .swal2-popup .swal2-content {
   font-size: 0.95em;
-}
-
-.dropdown-content {
-  max-height: 300px;
 }
