@@ -22,23 +22,23 @@ evolution of a numerical variable along the time by groups. It is
 possible to observe how several groups evolve and the competition among
 them.
 
-There are several tools available to create bar chart race. However,
+There are several tools available to create bar chart races. However,
 there is no standard tool to create such kind of plot in R. Therefore,
 we borrow a [D3
 implementation](https://bl.ocks.org/jrzief/70f1f8a5d066a286da3a1e699823470f)
-by [Joel Zief](https://bl.ocks.org/jrzief) and after some customization
-we were able to use it as template for the *r2d3* package.
+by [Joel Zief](https://bl.ocks.org/jrzief) and after some customization,
+we were able to use it as a template for the *r2d3* package.
 
 Our tool provides three examples as well as a tab in which the user can
-introduce their own dataset to creat a bar chart race. For each example
-the user can setup some parameters as the number of bars, the transition
-speed and the mood. The latter provides a palette and a song for a
-selected mood, helping to create an atmosphere.
+introduce their own dataset to create a bar chart race. For each
+example, the user can set up some parameters as the number of bars, the
+transition speed, and the mood. The latter provides a palette and a song
+for a selected mood, helping to create an atmosphere.
 
 ## COVID-19 bar chart race
 
-The bar chart race is based on the diarly counts of new cases, deaths
-and recovered individuals provided by the [Johns Hopkins
+The bar chart race is based on the daily counts of new cases, deaths and
+recovered individuals provided by the [Johns Hopkins
 University](https://github.com/CSSEGISandData/COVID-19) for the new
 COVID-19 (coronavirus).
 
@@ -48,8 +48,8 @@ COVID-19 (coronavirus).
 
 It is a very common example of bar char races. The data is provided by
 [Interbrand](https://www.interbrand.com/best-brands/) and presents the
-value of several Brands around the world showing its evolution over
-time.
+market value of several Brands around the world showing its evolution
+over time.
 
 ![](www/img/brands.png)
 
@@ -57,7 +57,7 @@ time.
 
 Based on the top 100 most downloaded R packages last month
 (*cranlogs::cran\_top\_downloads*), the bar chart race presents the
-cumulative number of downloads of each package since 01/01/2019 until
+cumulative number of downloads of each package from 01/01/2019 until
 31/12/2019.
 
 ![](www/img/pkgs.png)
