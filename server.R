@@ -1,5 +1,7 @@
 server <- function(input, output, session) {
   runjs("$('#dataset_user').parent().removeClass('btn-default').addClass('btn-danger');")
+  
+  ##-- Introduction
   introjs(session = session, 
           options = list(steps =
                            data.frame(

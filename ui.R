@@ -29,6 +29,7 @@ material_page(
     ),
     br(), 
     tags$div(style = "display:inherit; padding-top:3%; text-align:center;",
+             ##-- Twitter
              tags$a(href = "https://twitter.com/https://twitter.com/share?ref_src=twsrc%5Etfw",
                     class = "twitter-share-button",
                     `data-hashtags` = "#rstats #rstudio #shinycontest #covid19 #coronavirus",
@@ -68,6 +69,7 @@ material_page(
       )
     )
   ),
+  
   ##-- COVID-19 ----
   material_side_nav_tab_content(
     side_nav_tab_id = "cv_race",
@@ -145,6 +147,7 @@ material_page(
             color = "primary",
             size = "xs"
           ),
+          ##-- Github
           HTML("<a class='github-button'
                    href='https://github.com/voronoys/barchartraceR2D3/archive/master.zip' 
                    data-color-scheme='no-preference: light; light: light; dark: dark;' 
@@ -156,6 +159,7 @@ material_page(
       )
     )
   ),
+  
   ##-- BRANDS ----
   material_side_nav_tab_content(
     side_nav_tab_id = "b_race",
@@ -224,6 +228,7 @@ material_page(
             color = "primary",
             size = "xs"
           ),
+          ##-- Github
           HTML("<a class='github-button' 
                    href='https://github.com/voronoys/barchartraceR2D3/archive/master.zip' 
                    data-color-scheme='no-preference: light; light: light; dark: dark;' 
@@ -235,6 +240,7 @@ material_page(
       )
     )
   ),
+  
   ##-- R packages ----
   material_side_nav_tab_content(
     side_nav_tab_id = "pkgs_race",
@@ -303,6 +309,7 @@ material_page(
             color = "primary",
             size = "xs"
           ),
+          ##-- Github
           HTML("<a class='github-button' 
                    href='https://github.com/voronoys/barchartraceR2D3/archive/master.zip' 
                    data-color-scheme='no-preference: light; light: light; dark: dark;' 
@@ -314,6 +321,7 @@ material_page(
       )
     )
   ),
+  
   ##-- USER ----
   material_side_nav_tab_content(
     side_nav_tab_id = "upload_data",
@@ -504,6 +512,7 @@ material_page(
                                  color = "primary",
                                  size = "xs"
                                ),
+                               ##-- Github
                                HTML("<a class='github-button' 
                                         href='https://github.com/voronoys/barchartraceR2D3/archive/master.zip' 
                                         data-color-scheme='no-preference: light; light: light; dark: dark;' 
