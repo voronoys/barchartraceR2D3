@@ -69,7 +69,8 @@ server <- function(input, output, session) {
       caption = "Source: John Hopkins University", 
       mood = mood, top_n = top_n, duration = duration, 
       css = "www/styles.css", script = "www/js/barchartrace.js", 
-      width = width, height = height
+      width = width, height = height,
+      margin = c(80, 20, 0, 0)
     )
     
     file_out <- "www/out_bcr/covid19.html"
@@ -108,7 +109,8 @@ server <- function(input, output, session) {
       caption = "Source: Interbrand", 
       mood = mood, top_n = top_n, duration = duration, 
       css = "www/styles.css", script = "www/js/barchartrace.js", 
-      width = width, height = height
+      width = width, height = height,
+      margin = c(80, 20, 0, 0)
     )
     
     file_out <- "www/out_bcr/brands.html"
@@ -149,7 +151,8 @@ server <- function(input, output, session) {
       caption = "Source: cranlogs", 
       mood = mood, top_n = top_n, duration = duration, 
       css = "www/styles.css", script = "www/js/barchartrace.js", 
-      width = width, height = height
+      width = width, height = height,
+      margin = c(80, 20, 0, 0)
     )
     
     file_out <- "www/out_bcr/pkgs.html"
@@ -333,7 +336,8 @@ server <- function(input, output, session) {
       caption = caption, 
       mood = mood, top_n = top_n, duration = duration, 
       css = "www/styles.css", script = "www/js/barchartrace.js", 
-      width = width, height = height
+      width = width, height = height,
+      margin = c(80, 20, 0, 0)
     )
     
     file_out <- "www/out_bcr/barchartrace.html"
