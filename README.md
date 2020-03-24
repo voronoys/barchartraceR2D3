@@ -3,8 +3,8 @@
 
 ## About the app
 
-**barchartraceR2D3** implements the mainstream bar chart race in D3
-providing a function to execute it from inside R.
+**barchartraceR2D3** implements the bar chart race in D3 providing a
+function to execute it in R.
 
 ## Links
 
