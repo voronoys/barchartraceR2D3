@@ -11,10 +11,11 @@ server <- function(input, output, session) {
                                          "#cv_race > div > div > div.row > div:nth-child(2)",
                                          "#duration_corona",
                                          "#top_n_corona",
+                                         "#cv_race > div > div > div.card > div > div:nth-child(3) > form > p > label",
                                          "#rebuild_corona_div",
                                          "#corona",
                                          "#corona_download_bttn",
-                                         "#cv_race > div > div > div.card > div > span:nth-child(5)"
+                                         "#cv_race > div > div > div.card > div > span:nth-child(6)"
                              ),
                              intro = c("Before start looking at the races let's have a tour in our app!", 
                                        "We provide three examples of bar chart races at the sidebar: COVID-19, brand value, and most downloaded R packages. Also, it is possible to upload your dataset.",
@@ -22,6 +23,7 @@ server <- function(input, output, session) {
                                        "The mood: neutral, sad or happy...",
                                        "The duration speed. The higher the duration the slower the transition.",
                                        "The number of bars to be displayed.",
+                                       "Should we display China?",
                                        "Rebuild the plot after changing the controls.",
                                        "Finally, you have the bar chart race displayed in the middle of the screen.",
                                        "Download it in HTML format!",
@@ -43,6 +45,7 @@ server <- function(input, output, session) {
     top_n <- isolate(input$top_n_corona)
     mood <- isolate(tolower(input$mood_corona))
     type <- isolate(input$type_corona)
+    include_china <- isolate(input$china_corona)
     
     type_sel <- switch(type,
                        "Confirmed cases" = "confirmed",
@@ -50,10 +53,16 @@ server <- function(input, output, session) {
     
     ##-- Prepare data
     data_corona <- data_corona %>%
-      filter(type == type_sel & name != "China") %>%
+      filter(type == type_sel) %>%
       filter(value != 0)
     
+    if(!include_china) {
+      data_corona <- data_corona %>%
+        filter(name != "China")
+    }
+    
     ##-- Prepare R2D3
+    title <- ifelse(include_china, "COVID-19", "COVID-19 outside China")
     subtitle <- switch(type_sel,
                        "confirmed" = "Confirmed cases (cumulative)",
                        "deaths" = "Number of deaths (cumulative)")
@@ -62,7 +71,7 @@ server <- function(input, output, session) {
       data = data_corona, 
       name = "name", date = "date", value = "value", date_label = "date", colour = "name", 
       cumulative = FALSE, 
-      title = "COVID-19 outside China", 
+      title = title, 
       subtitle = subtitle, 
       caption = "Source: John Hopkins University", 
       mood = mood, top_n = top_n, duration = duration, 

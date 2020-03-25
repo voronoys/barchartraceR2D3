@@ -124,6 +124,9 @@ material_page(
         ),
         material_card(
           title = "", 
+          tags$div(
+            material_checkbox(input_id = "china_corona", label = "Include China", initial_value = FALSE, color = "teal lighten-3")
+          ),
           material_card(
             title = "",
             shinycssloaders::withSpinner(
