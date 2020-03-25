@@ -23,7 +23,7 @@ server <- function(input, output, session) {
                                        "The mood: neutral, sad or happy...",
                                        "The duration speed. The higher the duration the slower the transition.",
                                        "The number of bars to be displayed.",
-                                       "Should we display China?",
+                                       "Should we exhibit China?",
                                        "Rebuild the plot after changing the controls.",
                                        "Finally, you have the bar chart race displayed in the middle of the screen.",
                                        "Download it in HTML format!",
