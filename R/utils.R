@@ -6,7 +6,8 @@ barchartrace_r2d3 <- function(data,
                               mood = "neutral", top_n = 12, duration = 700,
                               css = "www/styles.css", script = "www/js/barchartrace.js",
                               width = 515, height = "100%",
-                              margin = c(80, 20, 5, 0)) {
+                              margin = c(80, 20, 5, 0),
+                              label_fix = FALSE) {
   ##-- Prepare data
   data <- prepare_data(data = data, 
                        date = date, date_label = date_label, 
@@ -30,7 +31,8 @@ barchartrace_r2d3 <- function(data,
                   top_n = top_n, tick_duration = duration,
                   height = 600, width = 960,
                   margin_top = margin[1], margin_right = margin[2], margin_bottom = margin[3], margin_left = margin[4],
-                  frame_labels = frame_labels)
+                  frame_labels = frame_labels,
+                  label_fix = label_fix)
   
   bcrr2d3 <- r2d3(data = data, 
                   css = css, 

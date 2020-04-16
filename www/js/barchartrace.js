@@ -57,7 +57,9 @@ data.forEach(d => {
   d.last_value = +d.last_value,
   d.value = isNaN(d.value) ? 0 : d.value,
   d.frame = +d.frame,
-  d.colour = d3.hsl(d.colour);
+  d.colour = d3.hsl(d.colour),
+  d.label_fix = options.label_fix,
+  d.left = margin.left;
 });
   
 let frame_slice = data.filter(d => d.frame == frame && !isNaN(d.value))
@@ -104,7 +106,13 @@ svg.selectAll('text.label')
   .enter()
   .append('text')
   .attr('class', 'label')
-  .attr('x', d => x(d.value)-8)
+  .attr("x", function(d){
+      if(d.label_fix){
+        return d.left - 8;
+        } else {
+          return x(d.value) - 8;
+          } 
+    })
   .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
   .style('text-anchor', 'end')
   .html(d => d.name);
@@ -181,7 +189,13 @@ let ticker = d3.interval(e => {
     .enter()
     .append('text')
     .attr('class', 'label')
-    .attr('x', d => x(d.value)-8)
+    .attr("x", function(d){
+      if(d.label_fix){
+        return d.left - 8;
+        } else {
+          return x(d.value)-8;
+          } 
+    })
     .attr('y', d => y(top_n+1)+5+((y(1)-y(0))/2))
     .style('text-anchor', 'end')
     .html(d => d.name)    
@@ -194,7 +208,13 @@ let ticker = d3.interval(e => {
     .transition()
     .duration(tick_duration)
     .ease(d3.easeLinear)
-    .attr('x', d => x(d.value)-8)
+    .attr("x", function(d){
+      if(d.label_fix){
+        return d.left - 8;
+        } else {
+          return x(d.value)-8;
+          } 
+    })
     .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
      
   labels
@@ -202,7 +222,13 @@ let ticker = d3.interval(e => {
     .transition()
     .duration(tick_duration)
     .ease(d3.easeLinear)
-    .attr('x', d => x(d.value)-8)
+    .attr("x", function(d){
+      if(d.label_fix){
+        return d.left - 8;
+        } else {
+          return x(d.value)-8;
+          } 
+    })
     .attr('y', d => y(top_n+1)+5)
     .remove();
      
@@ -214,7 +240,7 @@ let ticker = d3.interval(e => {
     .attr('class', 'value_label')
     .attr('x', d => x(d.value)+5)
     .attr('y', d => y(top_n+1)+5)
-    .text(d => d3.format(',.0f')(d.last_value))
+    .text(d => d3.format(',.0f')(d.value))
     .transition()
     .duration(tick_duration)
     .ease(d3.easeLinear)
